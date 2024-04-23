@@ -41,7 +41,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
 				<Flex align='center' w='100%'>
 					<Button bg={boxBg} fontSize='sm' fontWeight='500' color={textColorSecondary} borderRadius='7px'>
 						<Icon as={MdOutlineCalendarToday} color={textColorSecondary} me='4px' />
-						This month
+						Esse mês
 					</Button>
 					<Button
 						ms='auto'
@@ -63,11 +63,11 @@ export default function TotalSpent(props: { [x: string]: any }) {
 			<Flex w='100%' flexDirection={{ base: 'column', lg: 'row' }}>
 				<Flex flexDirection='column' me='20px' mt='28px'>
 					<Text color={textColor} fontSize='34px' textAlign='start' fontWeight='700' lineHeight='100%'>
-						$37.5K
+						R$37.5K
 					</Text>
 					<Flex align='center' mb='20px'>
 						<Text color='secondaryGray.600' fontSize='sm' fontWeight='500' mt='4px' me='12px'>
-							Total Spent
+							Total recebido
 						</Text>
 						<Flex align='center'>
 							<Icon as={RiArrowUpSFill} color='green.500' me='2px' mt='2px' />
@@ -80,7 +80,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
 					<Flex align='center'>
 						<Icon as={IoCheckmarkCircle} color='green.500' me='4px' />
 						<Text color='green.500' fontSize='md' fontWeight='700'>
-							On track
+							No caminho!
 						</Text>
 					</Flex>
 				</Flex>

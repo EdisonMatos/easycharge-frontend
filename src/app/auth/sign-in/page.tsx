@@ -22,7 +22,7 @@
 
 */
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 // Chakra imports
 import {
   Box,
@@ -47,6 +47,14 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { signIn  } from "next-auth/react";
+import { useRouter, useSearchParams } from 'next/navigation';
+
+
+interface State {
+  email: string
+  password: string
+}
 
 export default function SignIn() {
   // Chakra color mode
@@ -66,15 +74,48 @@ export default function SignIn() {
     { bg: 'whiteAlpha.200' },
   );
   const [show, setShow] = React.useState(false);
+  
+  const [values, setValues] = React.useState<State>({
+    email: "",
+    password: '',
+  })
+  
+const route = useRouter()
+const searchParams = useSearchParams()
+const error = searchParams.get('error')
+  
   const handleClick = () => setShow(!show);
+  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+  const handleSignIn = async (event: any) => {  
+    const { email, password } = values
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    }).then(({ ok, error }) => {
+      if (ok) {
+        route.push("/");
+      } else {
+        route.push(`/auth/sign-in?error=${error}`);
+      }
+    })
+    event.preventDefault()
+  }
   return (
-    <DefaultAuthLayout illustrationBackground={'/img/auth/auth.png'}>
+    <DefaultAuthLayout illustrationBackground={'/img/auth/bg-purple2.png'}>
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w="100%"
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
-        h="100%"
+        h={{
+          sm: 'auto',
+          md: 'auto',
+          lg: '70vh',
+          xl: '70vh',
+        }}
         alignItems="start"
         justifyContent="center"
         mb={{ base: '30px', md: '60px' }}
@@ -82,9 +123,10 @@ export default function SignIn() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
+        
         <Box me="auto">
           <Heading color={textColor} fontSize="36px" mb="10px">
-            Sign In
+            Entrar
           </Heading>
           <Text
             mb="36px"
@@ -93,7 +135,7 @@ export default function SignIn() {
             fontWeight="400"
             fontSize="md"
           >
-            Enter your email and password to sign in!
+            Digite seu email e senha para entrar!
           </Text>
         </Box>
         <Flex
@@ -122,15 +164,16 @@ export default function SignIn() {
             _focus={googleActive}
           >
             <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
-            Sign in with Google
+            Entre com o Google
           </Button>
           <Flex align="center" mb="25px">
             <HSeparator />
             <Text color="gray.400" mx="14px">
-              or
+              ou
             </Text>
             <HSeparator />
           </Flex>
+          <Box><SignInError error={error}></SignInError></Box>
           <FormControl>
             <FormLabel
               display="flex"
@@ -148,9 +191,10 @@ export default function SignIn() {
               fontSize="sm"
               ms={{ base: '0px', md: '0px' }}
               type="email"
-              placeholder="mail@simmmple.com"
+              placeholder="mail@easycharge.com"
               mb="24px"
               fontWeight="500"
+              onChange={handleChange('email')} 
               size="lg"
             />
             <FormLabel
@@ -160,15 +204,16 @@ export default function SignIn() {
               color={textColor}
               display="flex"
             >
-              Password<Text color={brandStars}>*</Text>
+              Senha<Text color={brandStars}>*</Text>
             </FormLabel>
             <InputGroup size="md">
               <Input
                 isRequired={true}
                 fontSize="sm"
-                placeholder="Min. 8 characters"
+                placeholder="Min. 8 caracteres"
                 mb="24px"
                 size="lg"
+                onChange={handleChange('password')}
                 type={show ? 'text' : 'password'}
                 variant="auth"
               />
@@ -195,7 +240,7 @@ export default function SignIn() {
                   color={textColor}
                   fontSize="sm"
                 >
-                  Keep me logged in
+                  Manter-me logado
                 </FormLabel>
               </FormControl>
               <Link href="/auth/forgot-password">
@@ -205,7 +250,7 @@ export default function SignIn() {
                   w="124px"
                   fontWeight="500"
                 >
-                  Forgot password?
+                  Esqueceu sua senha?
                 </Text>
               </Link>
             </Flex>
@@ -213,11 +258,12 @@ export default function SignIn() {
               fontSize="sm"
               variant="brand"
               fontWeight="500"
+              onClick={handleSignIn}
               w="100%"
               h="50"
               mb="24px"
             >
-              Sign In
+              Entrar
             </Button>
           </FormControl>
           <Flex
@@ -229,14 +275,14 @@ export default function SignIn() {
           >
             <Link href="/auth/sign-up">
               <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-                Not registered yet?
+                Não está registrado?
                 <Text
                   color={textColorBrand}
                   as="span"
                   ms="5px"
                   fontWeight="500"
                 >
-                  Create an Account
+                  Criar conta
                 </Text>
               </Text>
             </Link>
@@ -246,3 +292,30 @@ export default function SignIn() {
     </DefaultAuthLayout>
   );
 }
+
+
+const errors = {
+  Signin: 'Try signing with a different account.',
+  OAuthSignin: 'Try signing with a different account.',
+  OAuthCallback: 'Try signing with a different account.',
+  OAuthCreateAccount: 'Try signing with a different account.',
+  EmailCreateAccount: 'Try signing with a different account.',
+  Callback: 'Try signing with a different account.',
+  OAuthAccountNotLinked:
+    'To confirm your identity, sign in with the same account you used originally.',
+  EmailSignin: 'Check your email address.',
+  CredentialsSignin:
+    'Login falhou. Verifique se as credenciais providas estão corretas.',
+  default: 'Não foi possível entrar.',
+};
+
+//@ts-ignore
+const SignInError = ({ error }) => {
+  //@ts-ignore
+  const errorMessage = error && (errors[error] ?? errors.default);
+  const textColorError = useColorModeValue('red.700', 'white');
+return (
+<Text color={textColorError} fontWeight="300" fontSize="14px"> 
+    {errorMessage}
+  </Text>)
+};

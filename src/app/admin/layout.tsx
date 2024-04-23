@@ -6,6 +6,8 @@ import {
   useDisclosure,
   useColorModeValue,
 } from '@chakra-ui/react';
+import SessionWrappers from 'app/SessionWrappers';
+
 import Footer from 'components/footer/FooterAdmin';
 // Layout components
 import Navbar from 'components/navbar/NavbarAdmin';
@@ -25,6 +27,7 @@ interface DashboardLayoutProps extends PropsWithChildren {
 
 // Custom Chakra theme
 export default function AdminLayout(props: DashboardLayoutProps) {
+
   const { children, ...rest } = props;
   // states and functions
   const [fixed] = useState(false);
@@ -39,6 +42,7 @@ export default function AdminLayout(props: DashboardLayoutProps) {
   const bg = useColorModeValue('secondaryGray.300', 'navy.900');
 
   return (
+    <SessionWrappers>
     <Box h="100vh" w="100vw" bg={bg}>
       <SidebarContext.Provider
         value={{
@@ -90,5 +94,6 @@ export default function AdminLayout(props: DashboardLayoutProps) {
         </Box>
       </SidebarContext.Provider>
     </Box>
+    </SessionWrappers>
   );
 }

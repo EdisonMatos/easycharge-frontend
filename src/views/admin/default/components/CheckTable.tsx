@@ -13,6 +13,7 @@ import {
 // Custom components
 import Card from 'components/card/Card';
 import Menu from 'components/menu/MainMenu';
+import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 
 type RowObj = {
 	name: [string, boolean];
@@ -20,17 +21,19 @@ type RowObj = {
 	quantity: number;
 	date: string;
 	info: boolean;
+	deb: string
+	protested: boolean
 };
- 
+
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
 export default function CheckTable(props: { tableData: any }) {
 	const { tableData } = props;
-	const [ sorting, setSorting ] = React.useState<SortingState>([]);
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const textColor = useColorModeValue('secondaryGray.900', 'white');
 	const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
-	let defaultData= tableData;
+	let defaultData = tableData;
 	const columns = [
 		columnHelper.accessor('name', {
 			id: 'name',
@@ -40,12 +43,12 @@ export default function CheckTable(props: { tableData: any }) {
 					align='center'
 					fontSize={{ sm: '10px', lg: '12px' }}
 					color='gray.400'>
-					NAME
+					NOME
 				</Text>
 			),
 			cell: (info: any) => (
 				<Flex align='center'>
-					<Checkbox defaultChecked={info.getValue()[1]} colorScheme='brandScheme' me='10px' />
+
 					<Text color={textColor} fontSize='sm' fontWeight='700'>
 						{info.getValue()[0]}
 					</Text>
@@ -60,7 +63,7 @@ export default function CheckTable(props: { tableData: any }) {
 					align='center'
 					fontSize={{ sm: '10px', lg: '12px' }}
 					color='gray.400'>
-					PROGRESS
+					CÓDIGO
 				</Text>
 			),
 			cell: (info) => (
@@ -77,7 +80,7 @@ export default function CheckTable(props: { tableData: any }) {
 					align='center'
 					fontSize={{ sm: '10px', lg: '12px' }}
 					color='gray.400'>
-					QUANTITY
+					CREDOR
 				</Text>
 			),
 			cell: (info) => (
@@ -94,7 +97,41 @@ export default function CheckTable(props: { tableData: any }) {
 					align='center'
 					fontSize={{ sm: '10px', lg: '12px' }}
 					color='gray.400'>
-					DATE
+					RCA
+				</Text>
+			),
+			cell: (info) => (
+				<Text color={textColor} fontSize='sm' fontWeight='700'>
+					{info.getValue()}
+				</Text>
+			)
+		}),
+		columnHelper.accessor('deb', {
+			id: 'deb ',
+			header: () => (
+				<Text
+					justifyContent='space-between'
+					align='center'
+					fontSize={{ sm: '10px', lg: '12px' }}
+					color='gray.400'>
+					DÉB. ATIVO
+				</Text>
+			),
+			cell: (info) => (
+				<Text color={textColor} fontSize='sm' fontWeight='700'>
+					{info.getValue()}
+				</Text>
+			)
+		}),
+		columnHelper.accessor('protested', {
+			id: 'protested',
+			header: () => (
+				<Text
+					justifyContent='space-between'
+					align='center'
+					fontSize={{ sm: '10px', lg: '12px' }}
+					color='gray.400'>
+					PROTESTO
 				</Text>
 			),
 			cell: (info) => (
@@ -104,7 +141,7 @@ export default function CheckTable(props: { tableData: any }) {
 			)
 		})
 	];
-	const [ data, setData ] = React.useState(() => [ ...defaultData ]);
+	const [data, setData] = React.useState(() => [...defaultData]);
 	const table = useReactTable({
 		data,
 		columns,
@@ -119,9 +156,12 @@ export default function CheckTable(props: { tableData: any }) {
 	return (
 		<Card flexDirection='column' w='100%' px='0px' overflowX={{ sm: 'scroll', lg: 'hidden' }}>
 			<Flex px='25px' mb="8px" justifyContent='space-between' align='center'>
-				<Text color={textColor} fontSize='22px' fontWeight='700' lineHeight='100%'>
-					Check Table
-				</Text>
+				<Flex px='20px' mb="8px" justifyContent='space-between' align='center'>
+					<Text color={textColor} fontSize='22px' fontWeight='700' lineHeight='100%'>
+						Complex Table
+					</Text>
+					<SearchBar />
+				</Flex>
 				<Menu />
 			</Flex>
 			<Box>
@@ -134,7 +174,7 @@ export default function CheckTable(props: { tableData: any }) {
 										<Th
 											key={header.id}
 											colSpan={header.colSpan}
-											pe='10px' 
+											pe='10px'
 											borderColor={borderColor}
 											cursor='pointer'
 											onClick={header.column.getToggleSortingHandler()}>

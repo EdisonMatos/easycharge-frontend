@@ -39,15 +39,15 @@ export default function Footer(props: { [x: string]: any }) {
         {' '}
         &copy; {new Date().getFullYear()}
         <Text as="span" fontWeight="500" ms="4px">
-          Horizon UI. All Rights Reserved. Made with love by
+          DenjiDev. Todos os direitos reservados. Feito por
           <Link
             mx="3px"
             color={textColor}
-            href="https://www.simmmple.com"
+            href="https://www.denjidev.com"
             target="_blank"
             fontWeight="700"
           >
-            Simmmple!
+            DenjiDev!
           </Link>
         </Text>
       </Text>
@@ -61,9 +61,9 @@ export default function Footer(props: { [x: string]: any }) {
           <Link
             fontWeight="500"
             color={linkColor}
-            href="mailto:hello@simmmple.com"
+            href="mailto:gqueiroz_photo@hotmail.com"
           >
-            Support
+            Suporte
           </Link>
         </ListItem>
         <ListItem
@@ -75,9 +75,9 @@ export default function Footer(props: { [x: string]: any }) {
           <Link
             fontWeight="500"
             color={linkColor}
-            href="https://www.simmmple.com/licenses"
+            href="https://www.denjidev.com/licenses"
           >
-            License
+            Licença
           </Link>
         </ListItem>
         <ListItem
@@ -89,18 +89,9 @@ export default function Footer(props: { [x: string]: any }) {
           <Link
             fontWeight="500"
             color={linkColor}
-            href="https://simmmple.com/terms-of-service"
+            href="https://denjidev.com/terms-of-service"
           >
-            Terms of Use
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            fontWeight="500"
-            color={linkColor}
-            href="https://www.blog.simmmple.com/"
-          >
-            Blog
+            Termos de Uso
           </Link>
         </ListItem>
       </List>

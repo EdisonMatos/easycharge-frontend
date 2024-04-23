@@ -26,6 +26,7 @@ import { FaEthereum } from 'react-icons/fa';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { MdInfoOutline, MdNotificationsNone } from 'react-icons/md';
 import routes from 'routes';
+import { signOut } from 'next-auth/react';
 export default function HeaderLinks(props: {
   secondary: boolean;
   onOpen: boolean | any;
@@ -305,8 +306,13 @@ export default function HeaderLinks(props: {
               color="red.400"
               borderRadius="8px"
               px="14px"
+              onClick={() => {
+                signOut({
+                  callbackUrl:"/auth/sign-in",
+                  redirect: true
+                })}}
             >
-              <Text fontSize="sm">Log out</Text>
+              <Text fontSize="sm">Sair</Text>
             </MenuItem>
           </Flex>
         </MenuList>
