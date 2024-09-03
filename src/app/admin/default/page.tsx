@@ -56,11 +56,10 @@ import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 export default function Default() {
-
-  const { data: session, status } = useSession()
-  if (session === null && status === 'unauthenticated' ){
-    redirect("/auth/sign-in")
-  }
+  // const { data: session, status } = useSession()
+  // if (session === null && status === 'unauthenticated' ){
+  //   redirect("/auth/sign-in")
+  // }
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const negativeColor = useColorModeValue('red.600', 'white');
@@ -101,7 +100,11 @@ export default function Default() {
           name="Gasto mensal com ligações"
           value="R$120,00"
         />
-        <MiniStatistics growth="+23%" name="Valores recebidos" value="R$574,34" />
+        <MiniStatistics
+          growth="+23%"
+          name="Valores recebidos"
+          value="R$574,34"
+        />
         <MiniStatistics
           startContent={
             <IconBox
@@ -128,14 +131,19 @@ export default function Default() {
           name="Total de clientes"
           value="2935"
         />
-                <MiniStatistics
+        <MiniStatistics
           startContent={
             <IconBox
               w="56px"
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdAttachMoney} color={negativeColor} />
+                <Icon
+                  w="32px"
+                  h="32px"
+                  as={MdAttachMoney}
+                  color={negativeColor}
+                />
               }
             />
           }
