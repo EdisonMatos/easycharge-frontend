@@ -23,7 +23,7 @@
 */
 
 import React, { ChangeEvent } from 'react';
-import InputMask from "react-input-mask";
+import InputMask from 'react-input-mask';
 // Chakra imports
 import {
   Box,
@@ -48,19 +48,18 @@ import DefaultAuthLayout from 'layouts/auth/Default';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { signIn } from "next-auth/react";
+import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-
 interface State {
-  email: string
-  confirmEmail: string
-  password: string
-  confirmPassword: string
-  username: string
-  name: string
-  taxId: string
-  cellphone: string
+  email: string;
+  confirmEmail: string;
+  password: string;
+  confirmPassword: string;
+  username: string;
+  name: string;
+  taxId: string;
+  cellphone: string;
 }
 
 export default function SignUp() {
@@ -83,69 +82,86 @@ export default function SignUp() {
   const [showConfirm, setShowConfirm] = React.useState(false);
   const [passwordWrong, setPasswordWrong] = React.useState(false);
   const [emailWrong, setEmailWrong] = React.useState(false);
-  const [isRegistered, setIsRegistered] = React.useState(false)
+  const [isRegistered, setIsRegistered] = React.useState(false);
   const [values, setValues] = React.useState<State>({
-    email: "",
-    confirmEmail: "",
+    email: '',
+    confirmEmail: '',
     password: '',
     confirmPassword: '',
     username: '',
     name: '',
     taxId: '',
     cellphone: '',
-  })
+  });
 
-  const route = useRouter()
-  const searchParams = useSearchParams()
-  const error = searchParams.get('error')
+  const route = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
   const handleClickShow = () => setShow(!show);
   const handleClickShowConfirm = () => setShowConfirm(!showConfirm);
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-    if (prop === ("email")) {
-      event.target.value !== values.confirmEmail ? setEmailWrong(true) : setEmailWrong(false)
-    }
-    if (prop === ("confirmEmail")) {
-      event.target.value !== values.email ? setEmailWrong(true) : setEmailWrong(false)
-    }
-    if (prop === ("password")) {
-      event.target.value !== values.confirmPassword ? setPasswordWrong(true) : setPasswordWrong(false)
-    }
-    if (prop === ("confirmPassword")) {
-      event.target.value !== values.password ? setPasswordWrong(true) : setPasswordWrong(false)
-    }
-    if (prop === ("username") && event.target.value) {
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json"
-        },
-      };
-      fetch(`http://192.168.1.236:8080/users/usernameIsAvailable/${event.target.value}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.isAvailable) {
-            setUsernameUnavailable(false)
-            return 
-          }
-          setUsernameUnavailable(true)
-        })
-    }
-
-    
-  }
-
+  const handleChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+      if (prop === 'email') {
+        event.target.value !== values.confirmEmail
+          ? setEmailWrong(true)
+          : setEmailWrong(false);
+      }
+      if (prop === 'confirmEmail') {
+        event.target.value !== values.email
+          ? setEmailWrong(true)
+          : setEmailWrong(false);
+      }
+      if (prop === 'password') {
+        event.target.value !== values.confirmPassword
+          ? setPasswordWrong(true)
+          : setPasswordWrong(false);
+      }
+      if (prop === 'confirmPassword') {
+        event.target.value !== values.password
+          ? setPasswordWrong(true)
+          : setPasswordWrong(false);
+      }
+      if (prop === 'username' && event.target.value) {
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        fetch(
+          `http://192.168.1.236:8080/users/usernameIsAvailable/${event.target.value}`,
+          requestOptions,
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isAvailable) {
+              setUsernameUnavailable(false);
+              return;
+            }
+            setUsernameUnavailable(true);
+          });
+      }
+    };
 
   const handleRegisterButton = () => {
-    const { email, password, username, name, taxId, cellphone } = values
-    return !(((email && password && username && name && taxId && cellphone) !== "") && !passwordWrong && !emailWrong)
-  }
+    const { email, password, username, name, taxId, cellphone } = values;
+    return !(
+      (email && password && username && name && taxId && cellphone) !== '' &&
+      !passwordWrong &&
+      !emailWrong
+    );
+  };
 
   const handleSignUp = async (event: any) => {
-    const { email, password, username, name } = values
-    let { taxId, cellphone } = values
-    taxId = taxId.replaceAll(".", "").replaceAll("-", "")
-    cellphone = cellphone.replaceAll(" ", "").replaceAll("-", "").replaceAll("(", "").replaceAll(")", "")
+    const { email, password, username, name } = values;
+    let { taxId, cellphone } = values;
+    taxId = taxId.replaceAll('.', '').replaceAll('-', '');
+    cellphone = cellphone
+      .replaceAll(' ', '')
+      .replaceAll('-', '')
+      .replaceAll('(', '')
+      .replaceAll(')', '');
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({
@@ -153,38 +169,39 @@ export default function SignUp() {
         password,
         username,
         name,
-        address: "Endereço padrão",
+        address: 'Endereço padrão',
         taxId,
-        cellphone
+        cellphone,
       }),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
     };
 
     fetch(`http://192.168.1.236:8080/users`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
         if (data.error) {
-          let urlToPush = "/auth/sign-up?error=CredentialsSignup"
-          data.error === "Conflict" ? urlToPush = "/auth/sign-up?error=UserAlreadyCreated" : null
+          let urlToPush = '/auth/sign-up?error=CredentialsSignup';
+          data.error === 'Conflict'
+            ? (urlToPush = '/auth/sign-up?error=UserAlreadyCreated')
+            : null;
           route.push(urlToPush);
-          return
+          return;
         }
-        setIsRegistered(true)
-      })
-    event.preventDefault()
-  }
+        setIsRegistered(true);
+      });
+    event.preventDefault();
+  };
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/bg-purple2.png'}>
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: "90%",
-          md: "50%"
+          sm: '90%',
+          md: '50%',
         }}
-
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
         h={{
@@ -200,16 +217,17 @@ export default function SignUp() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
-
-        {isRegistered ?
+        {isRegistered ? (
           <>
             <Box me="auto" h="70vh">
               <Heading color={textColor} fontSize="36px" mb="10px">
-                Conta registrada, por favor verifique o email cadastrado pra confirmação do registro!
+                Conta registrada, por favor verifique o email cadastrado pra
+                confirmação do registro!
               </Heading>
             </Box>
-          </> : <>
-
+          </>
+        ) : (
+          <>
             <Box me="auto">
               <Heading color={textColor} fontSize="36px" mb="10px">
                 Criar nova conta
@@ -235,7 +253,7 @@ export default function SignUp() {
               me="auto"
               mb={{ base: '20px', md: 'auto' }}
             >
-              <Button
+              {/* <Button
                 fontSize="sm"
                 me="0px"
                 mb="26px"
@@ -258,8 +276,10 @@ export default function SignUp() {
                   ou
                 </Text>
                 <HSeparator />
-              </Flex>
-              <Box><SignUpError error={error}></SignUpError></Box>
+              </Flex> */}
+              <Box>
+                <SignUpError error={error}></SignUpError>
+              </Box>
               <FormControl>
                 <FormLabel
                   display="flex"
@@ -283,10 +303,13 @@ export default function SignUp() {
                   onChange={handleChange('name')}
                   size="lg"
                 />
-                {usernameUnavailable ?
-                <>
-                  <Box><SignUpError error="UserIsUnavailable"></SignUpError></Box>
-                  </> : null}
+                {usernameUnavailable ? (
+                  <>
+                    <Box>
+                      <SignUpError error="UserIsUnavailable"></SignUpError>
+                    </Box>
+                  </>
+                ) : null}
                 <FormLabel
                   display="flex"
                   ms="4px"
@@ -325,7 +348,9 @@ export default function SignUp() {
                   fontSize="sm"
                   ms={{ base: '0px', md: '0px' }}
                   type="text"
-                  as={InputMask} mask="***.***.***-**" maskChar={null}
+                  as={InputMask}
+                  mask="***.***.***-**"
+                  maskChar={null}
                   placeholder="082.644.235-23"
                   mb="24px"
                   fontWeight="500"
@@ -348,7 +373,9 @@ export default function SignUp() {
                   fontSize="sm"
                   ms={{ base: '0px', md: '0px' }}
                   type="text"
-                  as={InputMask} mask="+** (**) *****-****" maskChar={null}
+                  as={InputMask}
+                  mask="+** (**) *****-****"
+                  maskChar={null}
                   placeholder="+55 (73) 98802-5229"
                   mb="24px"
                   fontWeight="500"
@@ -377,7 +404,7 @@ export default function SignUp() {
                   onChange={handleChange('email')}
                   size="lg"
                 />
-                                <FormLabel
+                <FormLabel
                   display="flex"
                   ms="4px"
                   fontSize="sm"
@@ -399,7 +426,13 @@ export default function SignUp() {
                   onChange={handleChange('confirmEmail')}
                   size="lg"
                 />
-                {emailWrong ?<Box><MustBeSameError message={"Emails não conhecidem!"}></MustBeSameError></Box> : null}
+                {emailWrong ? (
+                  <Box>
+                    <MustBeSameError
+                      message={'Emails não conhecidem!'}
+                    ></MustBeSameError>
+                  </Box>
+                ) : null}
                 <FormLabel
                   ms="4px"
                   fontSize="sm"
@@ -420,7 +453,11 @@ export default function SignUp() {
                     type={show ? 'text' : 'password'}
                     variant="auth"
                   />
-                  <InputRightElement display="flex" alignItems="center" mt="4px">
+                  <InputRightElement
+                    display="flex"
+                    alignItems="center"
+                    mt="4px"
+                  >
                     <Icon
                       color={textColorSecondary}
                       _hover={{ cursor: 'pointer' }}
@@ -445,11 +482,15 @@ export default function SignUp() {
                     placeholder="Min. 8 caracteres"
                     mb="24px"
                     size="lg"
-                    onChange={handleChange("confirmPassword")}
+                    onChange={handleChange('confirmPassword')}
                     type={showConfirm ? 'text' : 'password'}
                     variant="auth"
                   />
-                  <InputRightElement display="flex" alignItems="center" mt="4px">
+                  <InputRightElement
+                    display="flex"
+                    alignItems="center"
+                    mt="4px"
+                  >
                     <Icon
                       color={textColorSecondary}
                       _hover={{ cursor: 'pointer' }}
@@ -458,7 +499,13 @@ export default function SignUp() {
                     />
                   </InputRightElement>
                 </InputGroup>
-                {passwordWrong ? <Box><MustBeSameError message={"Senhas não conhecidem!"}></MustBeSameError></Box> : null}
+                {passwordWrong ? (
+                  <Box>
+                    <MustBeSameError
+                      message={'Senhas não conhecidem!'}
+                    ></MustBeSameError>
+                  </Box>
+                ) : null}
                 <Button
                   fontSize="sm"
                   variant="brand"
@@ -478,24 +525,25 @@ export default function SignUp() {
                 alignItems="start"
                 maxW="100%"
                 mt="0px"
-              >
-              </Flex>
-            </Flex></>}
+              ></Flex>
+            </Flex>
+          </>
+        )}
       </Flex>
     </DefaultAuthLayout>
   );
 }
 
 //@ts-ignore
-const MustBeSameError = ({message}) => {
+const MustBeSameError = ({ message }) => {
   //@ts-ignore
   const textColorError = useColorModeValue('red.700', 'white');
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {message}
-    </Text>)
+    </Text>
+  );
 };
-
 
 const errors = {
   Signin: 'Try signing with a different account.',
@@ -509,10 +557,8 @@ const errors = {
   EmailSignin: 'Check your email address.',
   CredentialsSignup:
     'Cadastro falhou. Verifique se as informações providas estão corretas.',
-  UserAlreadyCreated:
-    'Já existe uma conta com esses dados. Ao invés disso,',
-    UserIsUnavailable:
-    'Nome de usuário está em uso',
+  UserAlreadyCreated: 'Já existe uma conta com esses dados. Ao invés disso,',
+  UserIsUnavailable: 'Nome de usuário está em uso',
   default: 'Não foi possível entrar.',
 };
 
@@ -524,11 +570,13 @@ const SignUpError = ({ error }) => {
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {errorMessage}{' '}
-      {error === "UserAlreadyCreated" ?
-          <Link href={'http://192.168.1.236:3000/auth/sign-in'} >
-            <Text color={textColorError} fontWeight="300" fontSize="14px" as='u'>tente logar</Text>
-          </Link>
-       :
-        null}
-    </Text>)
+      {error === 'UserAlreadyCreated' ? (
+        <Link href={'http://192.168.1.236:3000/auth/sign-in'}>
+          <Text color={textColorError} fontWeight="300" fontSize="14px" as="u">
+            tente logar
+          </Text>
+        </Link>
+      ) : null}
+    </Text>
+  );
 };

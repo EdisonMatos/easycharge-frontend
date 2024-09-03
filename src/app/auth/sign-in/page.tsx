@@ -47,13 +47,12 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { signIn  } from "next-auth/react";
+import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-
 interface State {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 export default function SignIn() {
@@ -74,35 +73,36 @@ export default function SignIn() {
     { bg: 'whiteAlpha.200' },
   );
   const [show, setShow] = React.useState(false);
-  
+
   const [values, setValues] = React.useState<State>({
-    email: "",
+    email: '',
     password: '',
-  })
-  
-const route = useRouter()
-const searchParams = useSearchParams()
-const error = searchParams.get('error')
-  
+  });
+
+  const route = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+
   const handleClick = () => setShow(!show);
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleSignIn = async (event: any) => {  
-    const { email, password } = values
-    await signIn("credentials", {
+  const handleChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+  const handleSignIn = async (event: any) => {
+    const { email, password } = values;
+    await signIn('credentials', {
       email,
       password,
       redirect: false,
     }).then(({ ok, error }) => {
       if (ok) {
-        route.push("/");
+        route.push('/');
       } else {
         route.push(`/auth/sign-in?error=${error}`);
       }
-    })
-    event.preventDefault()
-  }
+    });
+    event.preventDefault();
+  };
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/bg-purple2.png'}>
       <Flex
@@ -123,7 +123,6 @@ const error = searchParams.get('error')
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
-        
         <Box me="auto">
           <Heading color={textColor} fontSize="36px" mb="10px">
             Entrar
@@ -149,7 +148,7 @@ const error = searchParams.get('error')
           me="auto"
           mb={{ base: '20px', md: 'auto' }}
         >
-          <Button
+          {/* <Button
             fontSize="sm"
             me="0px"
             mb="26px"
@@ -172,8 +171,10 @@ const error = searchParams.get('error')
               ou
             </Text>
             <HSeparator />
-          </Flex>
-          <Box><SignInError error={error}></SignInError></Box>
+          </Flex> */}
+          <Box>
+            <SignInError error={error}></SignInError>
+          </Box>
           <FormControl>
             <FormLabel
               display="flex"
@@ -194,7 +195,7 @@ const error = searchParams.get('error')
               placeholder="mail@easycharge.com"
               mb="24px"
               fontWeight="500"
-              onChange={handleChange('email')} 
+              onChange={handleChange('email')}
               size="lg"
             />
             <FormLabel
@@ -293,7 +294,6 @@ const error = searchParams.get('error')
   );
 }
 
-
 const errors = {
   Signin: 'Try signing with a different account.',
   OAuthSignin: 'Try signing with a different account.',
@@ -314,8 +314,9 @@ const SignInError = ({ error }) => {
   //@ts-ignore
   const errorMessage = error && (errors[error] ?? errors.default);
   const textColorError = useColorModeValue('red.700', 'white');
-return (
-<Text color={textColorError} fontWeight="300" fontSize="14px"> 
-    {errorMessage}
-  </Text>)
+  return (
+    <Text color={textColorError} fontWeight="300" fontSize="14px">
+      {errorMessage}
+    </Text>
+  );
 };
