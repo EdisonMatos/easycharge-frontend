@@ -28,7 +28,7 @@ const routes: IRoute[] = [
   {
     name: 'Enviar Comprovante',
     layout: '/admin',
-    path: '/nft-marketplace',
+    path: '/sendReceipt',
     icon: (
       <Icon
         as={MdOutlineShoppingCart}
@@ -43,7 +43,7 @@ const routes: IRoute[] = [
     name: 'Meus Envios',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/data-tables',
+    path: '/mySubmissions',
   },
   // {
   //   name: 'Profile',
