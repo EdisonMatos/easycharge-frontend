@@ -72,7 +72,7 @@ export default function Default() {
         gap="20px"
         mb="20px"
       >
-        <MiniStatistics
+        {/* <MiniStatistics
           startContent={
             <IconBox
               w="56px"
@@ -85,7 +85,7 @@ export default function Default() {
           }
           name="Negociação mensal"
           value="R$350,40"
-        />
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
@@ -97,14 +97,14 @@ export default function Default() {
               }
             />
           }
-          name="Gasto mensal com ligações"
-          value="R$120,00"
+          name="Pontos"
+          value="5.000"
         />
-        <MiniStatistics
+        {/* <MiniStatistics
           growth="+23%"
           name="Valores recebidos"
           value="R$574,34"
-        />
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
@@ -114,8 +114,8 @@ export default function Default() {
               icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
             />
           }
-          name="Dívidas protestadas"
-          value="154"
+          name="Saques efetivados"
+          value="R$ 2.950,00"
         />
         <MiniStatistics
           startContent={
@@ -128,10 +128,10 @@ export default function Default() {
               }
             />
           }
-          name="Total de clientes"
-          value="2935"
+          name="Comprovantes enviados"
+          value="7"
         />
-        <MiniStatistics
+        {/* <MiniStatistics
           startContent={
             <IconBox
               w="56px"
@@ -149,7 +149,7 @@ export default function Default() {
           }
           name="Clientes em atraso"
           value="2935"
-        />
+        /> */}
       </SimpleGrid>
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
@@ -160,11 +160,10 @@ export default function Default() {
         <CheckTable tableData={tableDataCheck} />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <ComplexTable tableData={tableDataComplex} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+        {/* <ComplexTable tableData={tableDataComplex} /> */}
+        {/* <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
           <Tasks />
-          {/* <MiniCalendar h="100%" minW="100%" selectRange={false} /> */}
-        </SimpleGrid>
+        </SimpleGrid> */}
       </SimpleGrid>
     </Box>
   );
