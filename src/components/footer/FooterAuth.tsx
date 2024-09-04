@@ -39,8 +39,8 @@ export default function Footer(props: { [x: string]: any }) {
         {' '}
         &copy; {new Date().getFullYear()}
         <Text as="span" fontWeight="500" ms="4px">
-          DenjiDev. Todos os direitos reservados. Feito por
-          <Link
+          Pay4Gains Todos os direitos reservados.
+          {/* <Link
             mx="3px"
             color={textColor}
             href="https://www.denjidev.com"
@@ -48,10 +48,10 @@ export default function Footer(props: { [x: string]: any }) {
             fontWeight="700"
           >
             DenjiDev!
-          </Link>
+          </Link> */}
         </Text>
       </Text>
-      <List display="flex">
+      {/* <List display="flex">
         <ListItem
           me={{
             base: '20px',
@@ -94,7 +94,7 @@ export default function Footer(props: { [x: string]: any }) {
             Termos de Uso
           </Link>
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 }
