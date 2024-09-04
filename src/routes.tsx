@@ -51,12 +51,12 @@ const routes: IRoute[] = [
   //   path: '/profile',
   //   icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
   // },
-  // {
-  //   name: 'Sign In',
-  //   layout: '/auth',
-  //   path: '/sign-in',
-  //   icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  // },
+  {
+    name: 'Sign In',
+    layout: '/auth',
+    path: '/sign-in',
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+  },
   // {
   //   name: 'RTL Admin',
   //   layout: '/rtl',
