@@ -86,7 +86,7 @@ export default function NftMarketplace() {
             />
             <p className="mt-2 text-xs text-gray-400">
               A identificação irá facilitar a diferenciar os comprovantes
-              futuramente. enviados.
+              futuramente.
             </p>
             <input
               type="file"
@@ -94,7 +94,7 @@ export default function NftMarketplace() {
               className="mt-[24px] w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-[#1C4532] file:hover:bg-[#1C4532] file:text-white rounded"
             />
             <p className="mt-2 text-xs text-gray-400">
-              PNG, JPG, SVG, WEBP, and GIF are allowed.
+              Formatos permitidos: PNG, JPG, SVG, WEBP, e GIF.
             </p>
             <Button
               className="mt-[32px] rounded-md"
