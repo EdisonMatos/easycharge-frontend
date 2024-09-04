@@ -99,7 +99,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
           <Flex align="center">
             <Icon as={IoCheckmarkCircle} color="green.500" me="4px" />
             <Text color="green.500" fontSize="md" fontWeight="700">
-              No caminho!
+              Não pare de ganhar!
             </Text>
           </Flex>
         </Flex>

@@ -62,14 +62,14 @@ export default function NftMarketplace() {
             <input
               type="file"
               onChange={handleFileChange}
-              className="mt-[24px] w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-blue-100 file:hover:bg-blue-200 file:text-gray-500 rounded"
+              className="mt-[24px] w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-[#1C4532] file:hover:bg-[#1C4532] file:text-white rounded"
             />
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="mt-2 text-xs text-gray-400">
               PNG, JPG, SVG, WEBP, and GIF are allowed.
             </p>
             <Button
               className="mt-[32px] rounded-md"
-              colorScheme="blue"
+              colorScheme="green"
               onClick={handleUpload}
               isDisabled={!selectedFile}
             >
