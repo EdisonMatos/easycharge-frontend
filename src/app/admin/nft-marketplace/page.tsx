@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import Card from 'components/card/Card';
+import { useRouter } from 'next/navigation'; // Importando o useRouter para redirecionamento
 
 export default function NftMarketplace() {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
+  const router = useRouter(); // Inicializando o useRouter
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -17,6 +19,12 @@ export default function NftMarketplace() {
     if (selectedFile) {
       console.log('Uploading:', selectedFile);
       setSelectedFile(null);
+
+      // Exibe o alerta e redireciona após o clique em OK
+      window.alert(
+        'Seu comprovante foi enviado com sucesso. \nVocê será redirecionado para a seção de "Meus Envios" para acompanhar sua solicitação.',
+      );
+      router.push('/admin/data-tables'); // Redireciona para a rota desejada
     } else {
       console.log('No file selected');
     }
