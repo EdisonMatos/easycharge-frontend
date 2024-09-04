@@ -1,6 +1,4 @@
-import React from 'react';
-
-// chakra imports
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -20,8 +18,6 @@ import {
   renderView,
 } from 'components/scrollbar/Scrollbar';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-
-// Assets
 import { IoMenuOutline } from 'react-icons/io5';
 import { IRoute } from 'types/navigation';
 import { isWindowAvailable } from 'utils/navigation';
@@ -42,11 +38,9 @@ function Sidebar(props: SidebarProps) {
     '14px 17px 40px 4px rgba(112, 144, 176, 0.08)',
     'unset',
   );
-  // Chakra Color Mode
   let sidebarBg = useColorModeValue('white', 'navy.800');
   let sidebarMargins = '0px';
 
-  // SIDEBAR
   return (
     <Box display={{ sm: 'none', xl: 'block' }} position="fixed" minH="100%">
       <Box
@@ -72,18 +66,35 @@ function Sidebar(props: SidebarProps) {
   );
 }
 
-// FUNCTIONS
-
 export function SidebarResponsive(props: SidebarResponsiveProps) {
-  let sidebarBackgroundColor = useColorModeValue('white', 'navy.800');
-  let menuColor = useColorModeValue('gray.400', 'white');
-  // // SIDEBAR
+  const sidebarBackgroundColor = useColorModeValue('white', 'navy.800');
+  const menuColor = useColorModeValue('gray.400', 'white');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const btnRef = React.useRef<HTMLDivElement | null>(null);
 
   const { routes } = props;
-  // let isWindows = navigator.platform.startsWith("Win");
-  //  BRAND
+
+  const handleClose = () => {
+    // Chama a função de fechamento e depois limpa os estilos
+    onClose();
+    setTimeout(() => {
+      // Remove as classes de fixed positioning se existirem
+      const overlay = document.querySelector('.chakra-modal__overlay');
+      const contentContainer = document.querySelector(
+        '.chakra-modal__content-container',
+      );
+
+      if (overlay) {
+        overlay.classList.remove('chakra-modal__overlay');
+        overlay.style.position = 'static';
+      }
+
+      if (contentContainer) {
+        contentContainer.classList.remove('chakra-modal__content-container');
+        contentContainer.style.position = 'static';
+      }
+    }, 300); // Ajuste o tempo conforme necessário
+  };
 
   return (
     <Flex display={{ sm: 'flex', xl: 'none' }} alignItems="center">
@@ -100,7 +111,7 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
       </Flex>
       <Drawer
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleClose} // Usa o handler customizado
         placement={
           isWindowAvailable() && window.document.documentElement.dir === 'rtl'
             ? 'right'
@@ -108,11 +119,10 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
         }
         finalFocusRef={btnRef}
       >
-        <DrawerOverlay />
         <DrawerContent w="285px" maxW="285px" bg={sidebarBackgroundColor}>
           <DrawerCloseButton
             zIndex="3"
-            onClick={onClose}
+            onClick={handleClose} // Usa o handler customizado
             _focus={{ boxShadow: 'none' }}
             _hover={{ boxShadow: 'none' }}
           />
@@ -131,6 +141,5 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
     </Flex>
   );
 }
-// PROPS
 
 export default Sidebar;
