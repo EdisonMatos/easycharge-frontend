@@ -18,7 +18,7 @@ export function SidebarBrand() {
   let secondColor = useColorModeValue('brand.500', 'white');
 
   return (
-    <Flex alignItems="center" flexDirection="column">
+    <Flex alignItems="center" flexDirection="column" className="w-[95%]">
       {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> */}
       <Flex alignItems="center" flexDirection="row">
         <Text color={logoColor} fontSize="3xl" ms="5px" fontWeight="700">

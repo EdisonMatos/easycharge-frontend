@@ -61,40 +61,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
       mb="0px"
       {...rest}
     >
-      <Flex justify="space-between" ps="0px" pe="20px" pt="5px" w="100%">
-        <Flex align="center" w="100%">
-          <Button
-            bg={boxBg}
-            fontSize="sm"
-            fontWeight="500"
-            color={textColorSecondary}
-            borderRadius="7px"
-          >
-            <Icon
-              as={MdOutlineCalendarToday}
-              color={textColorSecondary}
-              me="4px"
-            />
-            Esse mês
-          </Button>
-          <Button
-            ms="auto"
-            alignItems="center"
-            justifyContent="center"
-            bg={bgButton}
-            _hover={bgHover}
-            _focus={bgFocus}
-            _active={bgFocus}
-            w="37px"
-            h="37px"
-            lineHeight="100%"
-            borderRadius="10px"
-            {...rest}
-          >
-            <Icon as={MdBarChart} color={iconColor} w="24px" h="24px" />
-          </Button>
-        </Flex>
-      </Flex>
+      <Flex justify="space-between" ps="0px" pe="20px" pt="5px" w="100%"></Flex>
       <Flex w="100%" flexDirection={{ base: 'column', lg: 'row' }}>
         <Flex flexDirection="column" me="20px" mt="28px">
           <Text
@@ -104,7 +71,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
             fontWeight="700"
             lineHeight="100%"
           >
-            R$37.5K
+            R$ 1.850,39
           </Text>
           <Flex align="center" mb="20px">
             <Text
