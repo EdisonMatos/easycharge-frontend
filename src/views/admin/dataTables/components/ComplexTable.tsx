@@ -53,7 +53,7 @@ export default function ComplexTable(props: { tableData: any }) {
           fontSize={{ sm: '10px', lg: '12px' }}
           color="gray.400"
         >
-          NAME
+          CASHBACK
         </Text>
       ),
       cell: (info: any) => (
@@ -116,37 +116,13 @@ export default function ComplexTable(props: { tableData: any }) {
           fontSize={{ sm: '10px', lg: '12px' }}
           color="gray.400"
         >
-          DATE
+          DATA
         </Text>
       ),
       cell: (info) => (
         <Text color={textColor} fontSize="sm" fontWeight="700">
           {info.getValue()}
         </Text>
-      ),
-    }),
-    columnHelper.accessor('progress', {
-      id: 'progress',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          PROGRESS
-        </Text>
-      ),
-      cell: (info) => (
-        <Flex align="center">
-          <Progress
-            variant="table"
-            colorScheme="brandScheme"
-            h="8px"
-            w="108px"
-            value={info.getValue()}
-          />
-        </Flex>
       ),
     }),
   ];
@@ -165,9 +141,9 @@ export default function ComplexTable(props: { tableData: any }) {
   return (
     <Card
       flexDirection="column"
-      w="100%"
       px="0px"
       overflowX={{ sm: 'scroll', lg: 'hidden' }}
+      className="w-[100%]"
     >
       <Flex px="25px" mb="8px" justifyContent="space-between" align="center">
         <Text
@@ -178,7 +154,6 @@ export default function ComplexTable(props: { tableData: any }) {
         >
           Meus Envios
         </Text>
-        <Menu />
       </Flex>
       <Box>
         <Table variant="simple" color="gray.500" mb="24px" mt="12px">

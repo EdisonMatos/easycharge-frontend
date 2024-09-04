@@ -5,24 +5,17 @@ import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import Card from 'components/card/Card';
 
 export default function NftMarketplace() {
-  // Chakra Color Mode
   const textColor = useColorModeValue('secondaryGray.900', 'white');
 
-  // State to hold the selected file
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Function to handle file selection
   const handleFileChange = (event: { target: { files: any[] } }) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // Function to handle file upload
   const handleUpload = () => {
     if (selectedFile) {
-      // Implement your file upload logic here
       console.log('Uploading:', selectedFile);
-
-      // Reset the file input after upload
       setSelectedFile(null);
     } else {
       console.log('No file selected');

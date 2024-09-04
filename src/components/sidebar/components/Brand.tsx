@@ -22,10 +22,10 @@ export function SidebarBrand() {
       {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> */}
       <Flex alignItems="center" flexDirection="row">
         <Text color={logoColor} fontSize="3xl" ms="5px" fontWeight="700">
-          Cash
+          Pay4
         </Text>
         <Text color={secondColor} fontSize="3xl" ms="5px" fontWeight="700">
-          Blooms
+          Gains
         </Text>
       </Flex>
       <HSeparator mb="20px" mt="20px" />
