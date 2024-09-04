@@ -63,8 +63,16 @@ export default function NftMarketplace() {
     <Box pt={{ base: '180px', md: '80px', xl: '80px' }} className="lg:w-[50%]">
       {/* Main Fields */}
       <Flex flexDirection="column">
-        <Card className="px-[25px] py-[20px]" p="0px">
-          <h2 className="mb-[12px]">Como funciona?</h2>
+        <Card className="p-[25px]" p="0px">
+          <Text
+            className="mb-[24px]"
+            color={textColor}
+            fontSize="22px"
+            fontWeight="700"
+            lineHeight="100%"
+          >
+            Como funciona?
+          </Text>
           <p className="text-[16px] text-neutral-500 font-medium">
             Após fazer o depósito, utilize o botão abaixo para enviar para nós o
             comprovante. Após confirmarmos, iremos disponibilizar o seus pontos,
@@ -72,12 +80,18 @@ export default function NftMarketplace() {
             <br />
             Você pode acompanhar o andamento da sua solicitação em "Meus Envios"
           </p>
-          <h2 className="mt-[28px] mb-[28px]">
+          <Text
+            className="my-[24px]"
+            color={textColor}
+            fontSize="22px"
+            fontWeight="700"
+            lineHeight="100%"
+          >
             Envie seu comprovante de depósito:
-          </h2>
+          </Text>
           <label
             htmlFor="uploadFile1"
-            className="bg-white text-neutral-500 font-medium text-base rounded max-w-md h-52 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]"
+            className="bg-white text-neutral-500 w-full font-medium text-base rounded max-w-md h-52 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
