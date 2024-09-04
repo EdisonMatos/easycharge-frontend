@@ -232,13 +232,13 @@ export default function SignUp() {
             <Box me="auto">
               <Link href="/auth/sign-in">
                 <Text
-                  className="mb-[24px]"
+                  className="mb-[24px] flex items-center"
                   color={textColorBrand}
                   fontSize="sm"
                   w="124px"
                   fontWeight="500"
                 >
-                  ⬅ Voltar
+                  <span className="text-[20px] mr-[6px]">⬅</span> Voltar
                 </Text>
               </Link>
               <Heading color={textColor} fontSize="36px" mb="10px">
