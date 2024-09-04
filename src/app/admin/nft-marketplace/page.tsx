@@ -100,7 +100,7 @@ export default function NftMarketplace() {
               className="mt-[32px] rounded-md"
               colorScheme="green"
               onClick={handleUpload}
-              isDisabled={!selectedFile || !identification} // Desabilita o botão se não houver arquivo ou identificação
+              isDisabled={!selectedFile || !identification}
             >
               Enviar Comprovante
             </Button>
