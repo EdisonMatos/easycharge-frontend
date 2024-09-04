@@ -73,7 +73,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
           >
             R$ 1.850,39
           </Text>
-          <Flex align="center" mb="20px">
+          {/* <Flex align="center" mb="20px">
             <Text
               color="secondaryGray.600"
               fontSize="sm"
@@ -81,7 +81,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
               mt="4px"
               me="12px"
             >
-              Total recebido
+              Variação
             </Text>
             <Flex align="center">
               <Icon as={RiArrowUpSFill} color="green.500" me="2px" mt="2px" />
@@ -94,12 +94,18 @@ export default function TotalSpent(props: { [x: string]: any }) {
                 +2.45%
               </Text>
             </Flex>
-          </Flex>
+          </Flex> */}
 
-          <Flex align="center">
+          <Flex align="center" className="mt-[24px]">
             <Icon as={IoCheckmarkCircle} color="green.500" me="4px" />
-            <Text color="green.500" fontSize="md" fontWeight="700">
-              Não pare de ganhar!
+            <Text
+              color="green.500"
+              fontSize="md"
+              fontWeight="500"
+              className="ml-[10px]"
+            >
+              Mantenha a maior variação possível afim de evitar dor de cabeça
+              com as plataformas envolvidas!
             </Text>
           </Flex>
         </Flex>

@@ -353,11 +353,15 @@ export const pieChartData = [63, 25, 12];
 
 export const lineChartDataTotalSpent = [
   {
-    name: 'Depositado',
+    name: 'Depósitos',
     data: [50, 64, 48, 66, 49, 68],
   },
   {
-    name: 'Recebido',
+    name: 'Saques',
+    data: [30, 40, 24, 46, 20, 46],
+  },
+  {
+    name: 'Variação',
     data: [30, 40, 24, 46, 20, 46],
   },
 ];
@@ -376,7 +380,7 @@ export const lineChartOptionsTotalSpent: ApexOptions = {
       color: '#4318FF',
     },
   },
-  colors: ['#1C4532', '#68D391'],
+  colors: ['#1C4532', '#68D391', '#38A169'],
   markers: {
     size: 0,
     colors: 'white',
@@ -404,7 +408,7 @@ export const lineChartOptionsTotalSpent: ApexOptions = {
   },
   xaxis: {
     // type: "numeric",
-    categories: ['SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB'],
+    categories: ['Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro'],
     labels: {
       style: {
         colors: '#A3AED0',
