@@ -1,64 +1,34 @@
 'use client';
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from 'react';
-
-// Chakra imports
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Text,
-  useColorModeValue,
-  SimpleGrid,
-  Link,
-} from '@chakra-ui/react';
-
-// Custom components
-import TableTopCreators from 'views/admin/marketplace/components/TableTopCreators';
-import HistoryItem from 'views/admin/marketplace/components/HistoryItem';
-import NFT from 'components/card/NFT';
+import React, { useState } from 'react';
+import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import Card from 'components/card/Card';
-import tableDataTopCreators from 'views/admin/marketplace/variables/tableDataTopCreators';
-
-// Assets
-import Nft1 from 'img/nfts/Nft1.png';
-import Nft2 from 'img/nfts/Nft2.png';
-import Nft3 from 'img/nfts/Nft3.png';
-import Nft4 from 'img/nfts/Nft4.png';
-import Nft5 from 'img/nfts/Nft5.png';
-import Nft6 from 'img/nfts/Nft6.png';
-import Avatar1 from 'img/avatars/avatar1.png';
-import Avatar2 from 'img/avatars/avatar2.png';
-import Avatar3 from 'img/avatars/avatar3.png';
-import Avatar4 from 'img/avatars/avatar4.png';
-import AdminLayout from 'layouts/admin';
 
 export default function NftMarketplace() {
   // Chakra Color Mode
   const textColor = useColorModeValue('secondaryGray.900', 'white');
-  const textColorBrand = useColorModeValue('brand.500', 'white');
+
+  // State to hold the selected file
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Function to handle file selection
+  const handleFileChange = (event: { target: { files: any[] } }) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  // Function to handle file upload
+  const handleUpload = () => {
+    if (selectedFile) {
+      // Implement your file upload logic here
+      console.log('Uploading:', selectedFile);
+
+      // Reset the file input after upload
+      setSelectedFile(null);
+    } else {
+      console.log('No file selected');
+    }
+  };
+
   return (
     <Box pt={{ base: '180px', md: '80px', xl: '80px' }} className="lg:w-[50%]">
       {/* Main Fields */}
@@ -76,7 +46,7 @@ export default function NftMarketplace() {
           <p className="text-[16px] text-neutral-500 font-medium">
             Após fazer o depósito, utilize o botão abaixo para enviar para nós o
             comprovante. Após confirmarmos, iremos disponibilizar o seus pontos,
-            que serão convertido em dinheiro e depositados em sua conta. <br />
+            que serão convertidos em dinheiro e depositados em sua conta. <br />
             <br />
             Você pode acompanhar o andamento da sua solicitação em "Meus Envios"
           </p>
@@ -87,41 +57,34 @@ export default function NftMarketplace() {
             fontWeight="700"
             lineHeight="100%"
           >
-            Envie seu comprovante de depósito:
+            Enviando seu comprovante de depósito:
           </Text>
-          <label
-            htmlFor="uploadFile1"
-            className="bg-white text-neutral-500 w-full font-medium text-base rounded max-w-md h-52 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-11 mb-2 fill-gray-500"
-              viewBox="0 0 32 32"
-            >
-              <path
-                d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-                data-original="#000000"
-              />
-              <path
-                d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-                data-original="#000000"
-              />
-            </svg>
-            Clique aqui para anexar a imagem
-            <input type="file" id="uploadFile1" className="hidden" />
-            <p className="text-xs font-medium text-gray-400 mt-2">
-              Formatos permitidos: PNG, JPG SVG, WEBP.
+          <div className="">
+            <label className="text-[14px] text-gray-500 font-medium mb-2 block">
+              Clique em "Escolher arquivo" e selecione a foto do comprovante.
+            </label>
+            <p className="text-[14px] text-gray-500 font-medium mb-2 block">
+              Após, clique em "Enviar Comprovante".
             </p>
-          </label>
-          <Text
-            color={textColor}
-            className="w-full"
-            fontSize="xl"
-            fontWeight="600"
-          ></Text>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="mt-[24px] w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-blue-100 file:hover:bg-blue-200 file:text-gray-500 rounded"
+            />
+            <p className="text-xs text-gray-400 mt-2">
+              PNG, JPG, SVG, WEBP, and GIF are allowed.
+            </p>
+            <Button
+              className="mt-[32px] rounded-md"
+              colorScheme="blue"
+              onClick={handleUpload}
+              isDisabled={!selectedFile}
+            >
+              Enviar Comprovante
+            </Button>
+          </div>
         </Card>
       </Flex>
-      {/* Delete Product */}
     </Box>
   );
 }
