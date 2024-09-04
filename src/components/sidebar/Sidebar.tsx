@@ -59,7 +59,6 @@ function Sidebar(props: SidebarProps) {
         overflowX="hidden"
         boxShadow={shadow}
       >
-
         <Scrollbars
           autoHide
           renderTrackVertical={renderTrack}
@@ -93,9 +92,9 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
           as={IoMenuOutline}
           color={menuColor}
           my="auto"
-          w="20px"
-          h="20px"
-          me="10px"
+          w="30px"
+          h="30px"
+          me="0px"
           _hover={{ cursor: 'pointer' }}
         />
       </Flex>
