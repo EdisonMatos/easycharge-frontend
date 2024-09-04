@@ -38,7 +38,10 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  Image,
 } from '@chakra-ui/react';
+import logo from '../../../../public/img/auth/auth-logo-white.png';
+import logobg from '../../../../public/img/auth/bg-logo.png';
 // Custom components
 import { HSeparator } from 'components/separator/Separator';
 import DefaultAuthLayout from 'layouts/auth/Default';
@@ -123,6 +126,16 @@ export default function SignIn() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
+        <div
+          className="flex items-center justify-center w-full bg-gray-100 mb-[60px] rounded-lg bg-center"
+          style={{ backgroundImage: `url(${logobg.src})` }}
+        >
+          <Image
+            src={logo.src}
+            alt="Pay4Gains"
+            className="w-[180px] my-[30px]"
+          />
+        </div>
         <Box me="auto">
           <Heading color={textColor} fontSize="36px" mb="10px">
             Entrar
