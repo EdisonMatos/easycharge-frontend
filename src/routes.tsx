@@ -11,7 +11,7 @@ import {
 // import MainDashboard from './pages/admin/default';
 // import NFTMarketplace from './pages/admin/nft-marketplace';
 // import Profile from './pages/admin/profile';
-// import DataTables from './pages/admin/data-tables';
+// import DataTables from './pages/admin/mySubmissions';
 // import RTL from './pages/rtl/rtl-default';
 
 // Auth Imports
@@ -28,7 +28,7 @@ const routes: IRoute[] = [
   {
     name: 'Enviar Comprovante',
     layout: '/admin',
-    path: '/sendReceipt',
+    path: '/nft-marketplace',
     icon: (
       <Icon
         as={MdOutlineShoppingCart}
@@ -43,7 +43,7 @@ const routes: IRoute[] = [
     name: 'Meus Envios',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/mySubmissions',
+    path: '/data-tables',
   },
   // {
   //   name: 'Profile',
