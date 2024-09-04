@@ -105,8 +105,8 @@ export default function HeaderLinks(props: {
         </Text>
       </Flex> */}
       <SidebarResponsive routes={routes} />
-      <Menu>
-        {/* <MenuButton p="0px">
+      {/* <Menu>
+        <MenuButton p="0px">
           <Icon
             mt="6px"
             as={MdNotificationsNone}
@@ -115,7 +115,7 @@ export default function HeaderLinks(props: {
             h="18px"
             me="10px"
           />
-        </MenuButton> */}
+        </MenuButton>
         <MenuList
           boxShadow={shadow}
           p="20px"
@@ -162,8 +162,7 @@ export default function HeaderLinks(props: {
             </MenuItem>
           </Flex>
         </MenuList>
-      </Menu>
-
+      </Menu> */}
       {/* <Menu>
         <MenuButton p="0px">
           <Icon
@@ -225,9 +224,7 @@ export default function HeaderLinks(props: {
           </Flex>
         </MenuList>
       </Menu> */}
-
       {/* Dark mode button toggle */}
-
       {/* <Button
         variant="no-hover"
         bg="transparent"
@@ -246,9 +243,7 @@ export default function HeaderLinks(props: {
           as={colorMode === 'light' ? IoMdMoon : IoMdSunny}
         />
       </Button> */}
-
       {/* Admin toggle options */}
-
       {/* <Menu>
         <MenuButton p="0px" style={{ position: 'relative' }}>
           <Box
