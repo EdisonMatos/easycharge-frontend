@@ -82,10 +82,11 @@ function FilterableUserList() {
           />
         </PopoverTrigger>
         <PopoverContent>
-          <PopoverBody>
+          <PopoverBody className="bg-neutral-100">
             <List>
               {filteredUsers.map((user, index) => (
                 <ListItem
+                  className="my-[15px] p-[10px] border-b-2 border-b-solid border-[1px] bg-white"
                   key={index}
                   onClick={() => handleSelectUser(user)}
                   cursor="pointer"
