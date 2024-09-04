@@ -33,62 +33,59 @@ import {
   Heading,
   Input,
   Text,
-  Link,
   useColorModeValue,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 // Custom components
 import DefaultAuthLayout from 'layouts/auth/Default';
 // Assets
 import { useRouter, useSearchParams } from 'next/navigation';
 
-
-
-
 export default function ForgotPassword() {
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
+  const textColorBrand = useColorModeValue('brand.500', 'white');
   const textColorSecondary = 'gray.400';
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-  const [isRegistered, setIsRegistered] = React.useState(false)
-  const [email, setEmail] = React.useState("")
+  const [isRegistered, setIsRegistered] = React.useState(false);
+  const [email, setEmail] = React.useState('');
 
-  const route = useRouter()
-  const searchParams = useSearchParams()
-  const error = searchParams.get('error')
+  const route = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
 
   const handleChangePassword = async (event: any) => {
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({
-        email
+        email,
       }),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
     };
 
     fetch(`http://192.168.1.236:8080/users/changePassword`, requestOptions)
-      .then(response => response ?? response.json())
-      .then(data => {
-        console.log(data)
+      .then((response) => response ?? response.json())
+      .then((data) => {
+        console.log(data);
         if (data.error) {
-          let urlToPush = "/auth/forgot-password?error=CredentialsSignup"
+          let urlToPush = '/auth/forgot-password?error=CredentialsSignup';
           route.push(urlToPush);
-          return
+          return;
         }
-        setIsRegistered(true)
-      })
-    event.preventDefault()
-  }
+        setIsRegistered(true);
+      });
+    event.preventDefault();
+  };
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/bg-purple2.png'}>
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: "90%",
-          md: "50%"
+          sm: '90%',
+          md: '50%',
         }}
-
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
         h={{
@@ -104,17 +101,29 @@ export default function ForgotPassword() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
-
-        {isRegistered ?
+        {isRegistered ? (
           <>
             <Box me="auto">
               <Heading color={textColor} fontSize="36px" mb="10px">
-                Alteração de senha solicitada! Por favor verifique o email cadastrado pra alteração.
+                Alteração de senha solicitada! Por favor verifique o email
+                cadastrado pra alteração.
               </Heading>
             </Box>
-          </> : <>
-
+          </>
+        ) : (
+          <>
             <Box me="auto">
+              <Link href="/auth/sign-in">
+                <Text
+                  className="mb-[24px]"
+                  color={textColorBrand}
+                  fontSize="sm"
+                  w="124px"
+                  fontWeight="500"
+                >
+                  ⬅ Voltar
+                </Text>
+              </Link>
               <Heading color={textColor} fontSize="36px" mb="10px">
                 Recuperar senha
               </Heading>
@@ -139,7 +148,9 @@ export default function ForgotPassword() {
               me="auto"
               mb={{ base: '20px', md: 'auto' }}
             >
-              <Box><SignUpError error={error}></SignUpError></Box>
+              <Box>
+                <SignUpError error={error}></SignUpError>
+              </Box>
               <FormControl>
                 <FormLabel
                   display="flex"
@@ -160,14 +171,14 @@ export default function ForgotPassword() {
                   placeholder="mail@easycharge.com"
                   mb="24px"
                   fontWeight="500"
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   size="lg"
                 />
                 <Button
                   fontSize="sm"
                   variant="brand"
                   fontWeight="500"
-                  isDisabled={!(email !== "")}
+                  isDisabled={!(email !== '')}
                   onClick={handleChangePassword}
                   w="100%"
                   h="50"
@@ -182,16 +193,16 @@ export default function ForgotPassword() {
                 alignItems="start"
                 maxW="100%"
                 mt="0px"
-              >
-              </Flex>
-            </Flex></>}
+              ></Flex>
+            </Flex>
+          </>
+        )}
       </Flex>
     </DefaultAuthLayout>
   );
 }
 
 //@ts-ignore
-
 
 const errors = {
   Signin: 'Try signing with a different account.',
@@ -205,10 +216,8 @@ const errors = {
   EmailSignin: 'Check your email address.',
   CredentialsSignup:
     'Cadastro falhou. Verifique se as informações providas estão corretas.',
-  UserAlreadyCreated:
-    'Já existe uma conta com esses dados. Ao invés disso,',
-  UserIsUnavailable:
-    'Nome de usuário está em uso',
+  UserAlreadyCreated: 'Já existe uma conta com esses dados. Ao invés disso,',
+  UserIsUnavailable: 'Nome de usuário está em uso',
   default: 'Não foi possível entrar.',
 };
 
@@ -220,11 +229,13 @@ const SignUpError = ({ error }) => {
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {errorMessage}{' '}
-      {error === "UserAlreadyCreated" ?
-        <Link href={'http://192.168.1.236:3000/auth/sign-in'} >
-          <Text color={textColorError} fontWeight="300" fontSize="14px" as='u'>tente logar</Text>
+      {error === 'UserAlreadyCreated' ? (
+        <Link href={'http://192.168.1.236:3000/auth/sign-in'}>
+          <Text color={textColorError} fontWeight="300" fontSize="14px" as="u">
+            tente logar
+          </Text>
         </Link>
-        :
-        null}
-    </Text>)
+      ) : null}
+    </Text>
+  );
 };

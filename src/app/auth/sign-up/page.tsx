@@ -38,9 +38,9 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  Link,
   useColorModeValue,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 // Custom components
 import { HSeparator } from 'components/separator/Separator';
 import DefaultAuthLayout from 'layouts/auth/Default';
@@ -66,6 +66,7 @@ export default function SignUp() {
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
+  const textColorBrand = useColorModeValue('brand.500', 'white');
   const brandStars = useColorModeValue('brand.500', 'brand.400');
   const googleBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.200');
   const googleText = useColorModeValue('navy.700', 'white');
@@ -229,6 +230,17 @@ export default function SignUp() {
         ) : (
           <>
             <Box me="auto">
+              <Link href="/auth/sign-in">
+                <Text
+                  className="mb-[24px]"
+                  color={textColorBrand}
+                  fontSize="sm"
+                  w="124px"
+                  fontWeight="500"
+                >
+                  ⬅ Voltar
+                </Text>
+              </Link>
               <Heading color={textColor} fontSize="36px" mb="10px">
                 Criar nova conta
               </Heading>
