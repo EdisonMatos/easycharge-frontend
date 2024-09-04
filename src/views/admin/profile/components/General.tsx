@@ -17,23 +17,24 @@ function FilterableUserList() {
   const [filter, setFilter] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [points, setPoints] = useState('');
+
   const users = [
-    'João',
-    'Carlos',
-    'Maria',
-    'Ana',
-    'Pedro',
-    'Juliana',
-    'Rafael',
+    { name: 'João', points: 120 },
+    { name: 'Carlos', points: 85 },
+    { name: 'Maria', points: 150 },
+    { name: 'Ana', points: 70 },
+    { name: 'Pedro', points: 95 },
+    { name: 'Juliana', points: 110 },
+    { name: 'Rafael', points: 130 },
   ];
 
   const filteredUsers = users
-    .filter((user) => user.toLowerCase().includes(filter.toLowerCase()))
+    .filter((user) => user.name.toLowerCase().includes(filter.toLowerCase()))
     .slice(0, 5);
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
-    setFilter(user);
+    setFilter(user.name);
   };
 
   const handleAddPoints = () => {
@@ -42,9 +43,9 @@ function FilterableUserList() {
       return;
     }
 
-    const confirmMessage = `Tem certeza que deseja adicionar ${points} pontos para ${selectedUser}?`;
+    const confirmMessage = `Tem certeza que deseja adicionar ${points} pontos para ${selectedUser.name}?`;
     if (window.confirm(confirmMessage)) {
-      alert(`Pontos adicionados ao usuário ${selectedUser}.`);
+      alert(`Pontos adicionados ao usuário ${selectedUser.name}.`);
     }
   };
 
@@ -90,7 +91,7 @@ function FilterableUserList() {
                   cursor="pointer"
                   _hover={{ backgroundColor: 'gray.100' }}
                 >
-                  {user}
+                  {user.name} - Saldo em conta: {user.points} pontos
                 </ListItem>
               ))}
             </List>
