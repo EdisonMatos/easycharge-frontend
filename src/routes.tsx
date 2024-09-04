@@ -5,6 +5,8 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
+  MdSend,
+  MdLogout,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -29,14 +31,7 @@ const routes: IRoute[] = [
     name: 'Enviar Comprovante',
     layout: '/admin',
     path: '/nft-marketplace',
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
+    icon: <Icon as={MdSend} width="20px" height="20px" color="inherit" />,
     secondary: true,
   },
   {
@@ -55,7 +50,7 @@ const routes: IRoute[] = [
     name: 'Sair',
     layout: '/auth',
     path: '/sign-in',
-    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdLogout} width="20px" height="20px" color="inherit" />,
   },
   // {
   //   name: 'RTL Admin',

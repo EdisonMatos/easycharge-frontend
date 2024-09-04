@@ -43,7 +43,7 @@ export const globalStyles = {
       600: '#A3AED0',
       700: '#707EAE',
       800: '#707EAE',
-      900: '#1B2559',
+      900: '#1C4532',
     },
     red: {
       100: '#FEEFEE',
