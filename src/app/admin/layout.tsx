@@ -70,7 +70,7 @@ export default function AdminLayout(props: DashboardLayoutProps) {
               <Box>
                 <Navbar
                   onOpen={onOpen}
-                  logoText={'Pla 4 Gains'}
+                  logoText={'Play 4 Gains'}
                   brandText={getActiveRoute(routes)}
                   secondary={getActiveNavbar(routes)}
                   message={getActiveNavbarText(routes)}

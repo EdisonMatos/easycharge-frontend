@@ -226,7 +226,9 @@ export default function HeaderLinks(props: {
         </MenuList>
       </Menu> */}
 
-      <Button
+      {/* Dark mode button toggle */}
+
+      {/* <Button
         variant="no-hover"
         bg="transparent"
         p="0px"
@@ -243,8 +245,11 @@ export default function HeaderLinks(props: {
           color={navbarIcon}
           as={colorMode === 'light' ? IoMdMoon : IoMdSunny}
         />
-      </Button>
-      <Menu>
+      </Button> */}
+
+      {/* Admin toggle options */}
+
+      {/* <Menu>
         <MenuButton p="0px" style={{ position: 'relative' }}>
           <Box
             _hover={{ cursor: 'pointer' }}
@@ -317,7 +322,7 @@ export default function HeaderLinks(props: {
             </MenuItem>
           </Flex>
         </MenuList>
-      </Menu>
+      </Menu> */}
     </Flex>
   );
 }
