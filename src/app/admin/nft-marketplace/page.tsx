@@ -1,7 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  useColorModeValue,
+  FormLabel,
+  Input,
+} from '@chakra-ui/react';
 import Card from 'components/card/Card';
 import { useRouter } from 'next/navigation'; // Importando o useRouter para redirecionamento
 
@@ -10,15 +18,21 @@ export default function NftMarketplace() {
   const router = useRouter(); // Inicializando o useRouter
 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [identification, setIdentification] = useState('');
 
   const handleFileChange = (event: { target: { files: any[] } }) => {
     setSelectedFile(event.target.files[0]);
   };
 
+  const handleIdentificationChange = (event: { target: { value: string } }) => {
+    setIdentification(event.target.value);
+  };
+
   const handleUpload = () => {
-    if (selectedFile) {
+    if (selectedFile && identification) {
       console.log('Uploading:', selectedFile);
       setSelectedFile(null);
+      setIdentification('');
 
       // Exibe o alerta e redireciona após o clique em OK
       window.alert(
@@ -26,7 +40,7 @@ export default function NftMarketplace() {
       );
       router.push('/admin/data-tables'); // Redireciona para a rota desejada
     } else {
-      console.log('No file selected');
+      console.log('No file selected or identification not filled');
     }
   };
 
@@ -60,12 +74,19 @@ export default function NftMarketplace() {
           >
             Enviando seu comprovante de depósito:
           </Text>
+
           <div className="">
-            <label className="text-[14px] text-gray-500 font-medium mb-2 block">
-              Clique em "Escolher arquivo" e selecione a foto do comprovante.
-            </label>
-            <p className="text-[14px] text-gray-500 font-medium mb-2 block">
-              Após, clique em "Enviar Comprovante".
+            <FormLabel>Identificação:</FormLabel>
+            <Input
+              placeholder="Ex: Depósito R$ 300,00 PanattaCasino"
+              type="text"
+              className="w-[100%]"
+              value={identification}
+              onChange={handleIdentificationChange}
+            />
+            <p className="mt-2 text-xs text-gray-400">
+              A identificação irá facilitar a diferenciar os comprovantes
+              futuramente. enviados.
             </p>
             <input
               type="file"
@@ -79,7 +100,7 @@ export default function NftMarketplace() {
               className="mt-[32px] rounded-md"
               colorScheme="green"
               onClick={handleUpload}
-              isDisabled={!selectedFile}
+              isDisabled={!selectedFile || !identification} // Desabilita o botão se não houver arquivo ou identificação
             >
               Enviar Comprovante
             </Button>
