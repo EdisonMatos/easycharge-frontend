@@ -7,7 +7,6 @@ import {
   Flex,
   Icon,
   Image,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -16,6 +15,8 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
+
+import Link from 'next/link';
 // Custom Components
 import { ItemContent } from 'components/menu/ItemContent';
 import { SearchBar } from 'components/navbar/searchBar/SearchBar';
@@ -104,7 +105,59 @@ export default function HeaderLinks(props: {
           </Text>
         </Text>
       </Flex> */}
-      <SidebarResponsive routes={routes} />
+      <div className="flex gap-[24px]">
+        <Link href="/admin/default">
+          <Text
+            className="flex items-center px-[8px] hover:underline"
+            color={textColorBrand}
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Painel
+          </Text>
+        </Link>
+        <Link href="/admin/nft-marketplace">
+          <Text
+            className="flex items-center px-[8px] hover:underline"
+            color={textColorBrand}
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Enviar
+          </Text>
+        </Link>
+        <Link href="/admin/data-tables">
+          <Text
+            className="flex items-center px-[8px] hover:underline"
+            color={textColorBrand}
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Envios
+          </Text>
+        </Link>
+        <Link href="/admin/profile">
+          <Text
+            className="flex items-center px-[8px] hover:underline"
+            color={textColorBrand}
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Admin
+          </Text>
+        </Link>
+        <Link href="/auth/sign-in">
+          <Text
+            className="flex items-center px-[8px] hover:underline mr-[8px]"
+            color={textColorBrand}
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Sair
+          </Text>
+        </Link>
+      </div>
+      {/* <SidebarResponsive routes={routes} /> */}
       {/* <Menu>
         <MenuButton p="0px">
           <Icon

@@ -93,7 +93,7 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
         contentContainer.classList.remove('chakra-modal__content-container');
         contentContainer.style.position = 'static';
       }
-    }, 300); // Ajuste o tempo conforme necessário
+    }, 300);
   };
 
   return (
@@ -111,7 +111,7 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
       </Flex>
       <Drawer
         isOpen={isOpen}
-        onClose={handleClose} // Usa o handler customizado
+        onClose={handleClose}
         placement={
           isWindowAvailable() && window.document.documentElement.dir === 'rtl'
             ? 'right'
@@ -122,7 +122,7 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
         <DrawerContent w="285px" maxW="285px" bg={sidebarBackgroundColor}>
           <DrawerCloseButton
             zIndex="3"
-            onClick={handleClose} // Usa o handler customizado
+            onClick={handleClose}
             _focus={{ boxShadow: 'none' }}
             _hover={{ boxShadow: 'none' }}
           />
