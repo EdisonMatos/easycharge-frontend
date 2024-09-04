@@ -143,7 +143,6 @@ export default function ComplexTable(props: { tableData: any }) {
       flexDirection="column"
       px="0px"
       overflowX={{ sm: 'scroll', lg: 'hidden' }}
-      className="w-[100%]"
     >
       <Flex px="25px" mb="8px" justifyContent="space-between" align="center">
         <Text
@@ -155,7 +154,7 @@ export default function ComplexTable(props: { tableData: any }) {
           Meus Envios
         </Text>
       </Flex>
-      <Box>
+      <Box className="">
         <Table variant="simple" color="gray.500" mb="24px" mt="12px">
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (

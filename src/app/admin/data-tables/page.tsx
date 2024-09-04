@@ -16,8 +16,8 @@ export default function DataTables() {
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <SimpleGrid
         mb="20px"
-        columns={{ sm: 1, md: 2 }}
         spacing={{ base: '20px', xl: '20px' }}
+        className="w-[50%]"
       >
         <DevelopmentTable tableData={tableDataDevelopment} />
         <CheckTable tableData={tableDataCheck} />
