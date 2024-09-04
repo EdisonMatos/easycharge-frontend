@@ -24,10 +24,9 @@ function AuthIllustration(props: {
           lg: 'auto',
           xl: 'auto',
         }}
-
         w={{ base: '100vw', md: '100%' }}
         maxW={{ md: '66%', lg: '1200px' }}
-        mx={{ md: 'auto',lg:"90px" }}
+        mx={{ md: 'auto', lg: '90px' }}
         pt={{ sm: '50px', md: '0px' }}
         px={{ lg: '30px', xl: '0px' }}
         ps={{ xl: '70px' }}
@@ -57,7 +56,7 @@ function AuthIllustration(props: {
         </Box>
         <Footer mb={{ xl: '3vh' }} />
       </Flex>
-      <FixedPlugin />
+      {/* <FixedPlugin /> */}
     </Flex>
   );
 }
