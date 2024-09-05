@@ -43,6 +43,14 @@ function FilterableUserList() {
     }
   };
 
+  // Função para resetar o estado inicial
+  const resetForm = () => {
+    setPoints('');
+    setSearchInput('');
+    setFoundUser(null);
+    setSearchClicked(false);
+  };
+
   // Função para adicionar pontos com alerta de confirmação
   const handleAddPoints = () => {
     const confirmation = window.confirm(
@@ -50,14 +58,18 @@ function FilterableUserList() {
     );
     if (confirmation) {
       alert('Pontos adicionados com sucesso!');
-      window.location.reload(); // Atualiza a página após confirmar
     } else {
       alert('Operação cancelada.');
-      // Retorna ao estado inicial
-      setPoints('');
-      setSearchInput('');
-      setFoundUser(null);
-      setSearchClicked(false);
+    }
+    resetForm(); // Reseta o formulário após confirmar ou cancelar
+  };
+
+  // Função para permitir apenas números positivos no campo de pontos
+  const handlePointsChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      // Regex para permitir apenas números positivos
+      setPoints(value);
     }
   };
 
@@ -100,7 +112,7 @@ function FilterableUserList() {
       {/* Renderizar usuário localizado ou mensagem de erro apenas após o clique */}
       {searchClicked &&
         (foundUser ? (
-          <Table mt="4" className="bg-green-50 rounded-2xl">
+          <Table mt="4" className="rounded-2xl bg-green-50">
             <Tbody>
               <Tr>
                 <Td fontWeight="bold">Usuário localizado:</Td>
@@ -128,12 +140,12 @@ function FilterableUserList() {
       {/* Input de pontos só renderizado se o usuário for localizado */}
       {foundUser && (
         <>
-          <FormLabel mt="4">Adicionar Pontos:</FormLabel>
+          <FormLabel mt="4">Quantidade de Pontos:</FormLabel>
           <Input
             placeholder="Digite a quantidade"
             value={points}
-            onChange={(e) => setPoints(e.target.value)}
-            type="number"
+            onChange={handlePointsChange}
+            type="text" // Tipo text para controlar entrada de apenas números positivos
             className="w-[50%]"
           />
           <Button
