@@ -98,7 +98,7 @@ export default function NftMarketplace() {
             </p>
             <Button
               className="mt-[32px] rounded-md"
-              colorScheme="green"
+              colorScheme="brand"
               onClick={handleUpload}
               isDisabled={!selectedFile || !identification}
             >
