@@ -1,57 +1,51 @@
 import { useState } from 'react';
 import {
   Input,
-  List,
-  ListItem,
   FormControl,
   FormLabel,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
   Button,
   Text,
+  Table,
+  Tbody,
+  Tr,
+  Td,
 } from '@chakra-ui/react';
 
 function FilterableUserList() {
-  const [filter, setFilter] = useState('');
-  const [selectedUser, setSelectedUser] = useState('');
   const [points, setPoints] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [foundUser, setFoundUser] = useState(null);
+  const [searchClicked, setSearchClicked] = useState(false); // Estado para controlar se o botão foi clicado
 
+  // Lista de usuários com UUID fixos
   const users = [
-    { name: 'João', points: 120 },
-    { name: 'Carlos', points: 85 },
-    { name: 'Maria', points: 150 },
-    { name: 'Ana', points: 70 },
-    { name: 'Pedro', points: 95 },
-    { name: 'Juliana', points: 110 },
-    { name: 'Rafael', points: 130 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0851', name: 'João', points: 120 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0852', name: 'Carlos', points: 85 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0853', name: 'Maria', points: 150 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0854', name: 'Ana', points: 70 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0855', name: 'Pedro', points: 95 },
+    {
+      id: 'd290f1ee-6c54-4b01-90e6-d701748f0856',
+      name: 'Juliana',
+      points: 110,
+    },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0857', name: 'Rafael', points: 130 },
   ];
 
-  const filteredUsers = users
-    .filter((user) => user.name.toLowerCase().includes(filter.toLowerCase()))
-    .slice(0, 5);
-
-  const handleSelectUser = (user) => {
-    setSelectedUser(user);
-    setFilter(user.name);
-  };
-
-  const handleAddPoints = () => {
-    if (!selectedUser || !points) {
-      alert('Todos os campos precisam ser preenchidos.');
-      return;
-    }
-
-    const confirmMessage = `Tem certeza que deseja adicionar ${points} pontos para ${selectedUser.name}?`;
-    if (window.confirm(confirmMessage)) {
-      alert(`Pontos adicionados ao usuário ${selectedUser.name}.`);
+  // Função para buscar usuário
+  const handleSearch = () => {
+    setSearchClicked(true); // Define que o botão foi clicado
+    const user = users.find((user) => user.id === searchInput);
+    if (user) {
+      setFoundUser(user);
+    } else {
+      setFoundUser(null);
     }
   };
 
   return (
     <FormControl
-      id="country"
+      id="user-form"
       className="bg-white p-[25px] rounded-3xl lg:w-[50%] flex flex-col"
     >
       <Text
@@ -63,60 +57,77 @@ function FilterableUserList() {
         Adicione pontos para os usuários
       </Text>
       <p className="text-[16px] text-neutral-500 font-medium mb-[24px]">
-        Selecione o usuário pesqusando o nome, insira o número de pontos a ser
+        Selecione o usuário pesquisando o ID, insira o número de pontos a ser
         adicionado e confirme clicando no botão abaixo.
       </p>
-      <FormLabel>Nome:</FormLabel>
-      <Popover
-        isOpen={filter.length > 0 && filteredUsers.length > 0 && !selectedUser}
-        placement="bottom-start"
-      >
-        <PopoverTrigger>
-          <Input
-            placeholder="Digite o nome do usuário"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              setSelectedUser('');
-            }}
-          />
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverBody className="bg-neutral-100">
-            <List>
-              {filteredUsers.map((user, index) => (
-                <ListItem
-                  className="my-[15px] p-[10px] border-b-2 border-b-solid border-[1px] bg-white"
-                  key={index}
-                  onClick={() => handleSelectUser(user)}
-                  cursor="pointer"
-                  _hover={{ backgroundColor: 'gray.100' }}
-                >
-                  {user.name} - Saldo em conta: {user.points} pontos
-                </ListItem>
-              ))}
-            </List>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
 
-      <FormLabel mt="4">Quantidade de Pontos:</FormLabel>
+      {/* Campo de busca de usuário por UUID */}
+      <FormLabel>ID do Usuário:</FormLabel>
       <Input
-        placeholder="Digite a quantidade"
-        value={points}
-        onChange={(e) => setPoints(e.target.value)}
-        type="number"
+        placeholder="Digite o ID do usuário"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
         className="w-[50%]"
       />
-
       <Button
         mt="4"
         className="w-[50%] rounded-md"
         colorScheme="brand"
-        onClick={handleAddPoints}
+        onClick={handleSearch}
+        isDisabled={!searchInput} // Só habilita se o input estiver preenchido
       >
-        Adicionar Pontos
+        Localizar Usuário
       </Button>
+
+      {/* Renderizar usuário localizado ou mensagem de erro apenas após o clique */}
+      {searchClicked &&
+        (foundUser ? (
+          <Table mt="4" className="w-[100%] bg-green-50 rounded-2xl">
+            <Tbody>
+              <Tr>
+                <Td fontWeight="bold">Usuário localizado:</Td>
+              </Tr>
+              <Tr>
+                <Td>ID:</Td>
+                <Td>{foundUser.id}</Td>
+              </Tr>
+              <Tr>
+                <Td>Nome:</Td>
+                <Td>{foundUser.name}</Td>
+              </Tr>
+              <Tr>
+                <Td>Saldo de Pontos:</Td>
+                <Td>{foundUser.points}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        ) : (
+          <Text mt="4" color="red.500">
+            Usuário não localizado. Verifique o ID digitado e tente novamente.
+          </Text>
+        ))}
+
+      {/* Input de pontos só renderizado se o usuário for localizado */}
+      {foundUser && (
+        <>
+          <FormLabel mt="4">Quantidade de Pontos:</FormLabel>
+          <Input
+            placeholder="Digite a quantidade"
+            value={points}
+            onChange={(e) => setPoints(e.target.value)}
+            type="number"
+            className="w-[50%]"
+          />
+          <Button
+            mt="4"
+            className="w-[50%] rounded-md"
+            colorScheme="brand"
+            isDisabled={!points} // Só habilita se o input de pontos estiver preenchido
+          >
+            Adicionar Pontos
+          </Button>
+        </>
+      )}
     </FormControl>
   );
 }
