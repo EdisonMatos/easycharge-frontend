@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function RootHead() {
   return (
-    <>
+    <head>
       <link rel="apple-touch-icon" href="/logo192.png" />
       <link rel="manifest" href="/manifest.json" />
       <link
@@ -10,10 +10,9 @@ export default function RootHead() {
         type="image/x-icon"
         href={process.env.NEXT_PUBLIC_BASE_PATH || '' + '/favicon.ico'}
       />
-
-      <title>Pay 4 Gains</title>
+      <title>Pay 4 Gains - Um caminho cheio de oportunidades</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="theme-color" content="#000000" />
-    </>
+    </head>
   );
 }
