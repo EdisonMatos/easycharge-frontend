@@ -20,7 +20,7 @@ function AuthIllustration(props: {
       bg={authBg}
       position="relative"
       h="max-content"
-      className="justify-center"
+      className="justify-center "
     >
       <Flex justifyContent="start" direction="column" className="">
         {children}
