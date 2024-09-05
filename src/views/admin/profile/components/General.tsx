@@ -1,34 +1,166 @@
-// Chakra imports
-import { SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
-// Custom components
-import Card from 'components/card/Card';
-import Information from 'views/admin/profile/components/Information';
+import { useState } from 'react';
+import {
+  Input,
+  FormControl,
+  FormLabel,
+  Button,
+  Text,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+} from '@chakra-ui/react';
 
-// Assets
-export default function GeneralInformation(props: { [x: string]: any }) {
-	const { ...rest } = props;
-	// Chakra Color Mode
-	const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
-	const textColorSecondary = 'gray.400';
-	const cardShadow = useColorModeValue('0px 18px 40px rgba(112, 144, 176, 0.12)', 'unset');
-	return (
-		<Card mb={{ base: '0px', '2xl': '20px' }} {...rest}>
-			<Text color={textColorPrimary} fontWeight='bold' fontSize='2xl' mt='10px' mb='4px'>
-				General Information
-			</Text>
-			<Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
-				As we live, our hearts turn colder. Cause pain is what we go through as we become older. We get insulted
-				by others, lose trust for those others. We get back stabbed by friends. It becomes harder for us to give
-				others a hand. We get our heart broken by people we love, even that we give them all...
-			</Text>
-			<SimpleGrid columns={2} gap='20px'>
-				<Information boxShadow={cardShadow} title='Education' value='Stanford University' />
-				<Information boxShadow={cardShadow} title='Languages' value='English, Spanish, Italian' />
-				<Information boxShadow={cardShadow} title='Department' value='Product Design' />
-				<Information boxShadow={cardShadow} title='Work History' value='Google, Facebook' />
-				<Information boxShadow={cardShadow} title='Organization' value='Simmmple Web LLC' />
-				<Information boxShadow={cardShadow} title='Birthday' value='20 July 1986' />
-			</SimpleGrid>
-		</Card>
-	);
+function FilterableUserList() {
+  const [points, setPoints] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [foundUser, setFoundUser] = useState(null);
+  const [searchClicked, setSearchClicked] = useState(false);
+
+  // Lista de usuários com UUID fixos
+  const users = [
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0851', name: 'João', points: 120 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0852', name: 'Carlos', points: 85 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0853', name: 'Maria', points: 150 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0854', name: 'Ana', points: 70 },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0855', name: 'Pedro', points: 95 },
+    {
+      id: 'd290f1ee-6c54-4b01-90e6-d701748f0856',
+      name: 'Juliana',
+      points: 110,
+    },
+    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0857', name: 'Rafael', points: 130 },
+  ];
+
+  // Função para buscar usuário
+  const handleSearch = () => {
+    setSearchClicked(true);
+    const user = users.find((user) => user.id === searchInput);
+    if (user) {
+      setFoundUser(user);
+    } else {
+      setFoundUser(null);
+    }
+  };
+
+  // Função para resetar o estado inicial
+  const resetForm = () => {
+    setPoints('');
+    setSearchInput('');
+    setFoundUser(null);
+    setSearchClicked(false);
+  };
+
+  // Função para adicionar pontos com alerta de confirmação
+  const handleAddPoints = () => {
+    const confirmation = window.confirm(
+      `Tem certeza que deseja adicionar ${points} pontos para o usuário ${foundUser.name}?`,
+    );
+    if (confirmation) {
+      alert('Pontos adicionados com sucesso!');
+    } else {
+      alert('Operação cancelada.');
+    }
+    resetForm(); // Reseta o formulário após confirmar ou cancelar
+  };
+
+  // Função para permitir apenas números positivos no campo de pontos
+  const handlePointsChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      // Regex para permitir apenas números positivos
+      setPoints(value);
+    }
+  };
+
+  return (
+    <FormControl
+      id="user-form"
+      className="bg-white p-[25px] rounded-3xl lg:w-[50%] flex flex-col"
+    >
+      <Text
+        fontSize="22px"
+        fontWeight="700"
+        lineHeight="100%"
+        className="mb-[22px]"
+      >
+        Adicione pontos para os usuários
+      </Text>
+      <p className="text-[16px] text-neutral-500 font-medium mb-[24px]">
+        Selecione o usuário pesquisando o ID, insira o número de pontos a ser
+        adicionado e confirme clicando no botão abaixo.
+      </p>
+
+      {/* Campo de busca de usuário por UUID */}
+      <FormLabel>ID do Usuário:</FormLabel>
+      <Input
+        placeholder="Digite o ID do usuário"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        className="w-[50%]"
+      />
+      <Button
+        mt="4"
+        className="w-[50%] rounded-md"
+        colorScheme="brand"
+        onClick={handleSearch}
+        isDisabled={!searchInput} // Só habilita se o input estiver preenchido
+      >
+        Localizar Usuário
+      </Button>
+
+      {/* Renderizar usuário localizado ou mensagem de erro apenas após o clique */}
+      {searchClicked &&
+        (foundUser ? (
+          <Table mt="4" className="rounded-2xl bg-green-50">
+            <Tbody>
+              <Tr>
+                <Td fontWeight="bold">Usuário localizado:</Td>
+              </Tr>
+              <Tr>
+                <Td>ID:</Td>
+                <Td>{foundUser.id}</Td>
+              </Tr>
+              <Tr>
+                <Td>Nome:</Td>
+                <Td>{foundUser.name}</Td>
+              </Tr>
+              <Tr>
+                <Td>Saldo de Pontos:</Td>
+                <Td>{foundUser.points}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        ) : (
+          <Text mt="4" color="red.500">
+            Usuário não localizado. Verifique o ID digitado e tente novamente.
+          </Text>
+        ))}
+
+      {/* Input de pontos só renderizado se o usuário for localizado */}
+      {foundUser && (
+        <>
+          <FormLabel mt="4">Quantidade de Pontos:</FormLabel>
+          <Input
+            placeholder="Digite a quantidade"
+            value={points}
+            onChange={handlePointsChange}
+            type="text" // Tipo text para controlar entrada de apenas números positivos
+            className="w-[50%]"
+          />
+          <Button
+            mt="4"
+            className="w-[50%] rounded-md"
+            colorScheme="brand"
+            isDisabled={!points} // Só habilita se o input de pontos estiver preenchido
+            onClick={handleAddPoints} // Adiciona pontos com confirmação
+          >
+            Adicionar Pontos
+          </Button>
+        </>
+      )}
+    </FormControl>
+  );
 }
+
+export default FilterableUserList;

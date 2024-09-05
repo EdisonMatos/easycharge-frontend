@@ -5,9 +5,7 @@ import {
   Button,
   Center,
   Flex,
-  Icon,
   Image,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -16,6 +14,10 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
+
+import { Icon } from '@chakra-ui/react';
+
+import Link from 'next/link';
 // Custom Components
 import { ItemContent } from 'components/menu/ItemContent';
 import { SearchBar } from 'components/navbar/searchBar/SearchBar';
@@ -24,7 +26,15 @@ import { SidebarResponsive } from 'components/sidebar/Sidebar';
 import navImage from '/public/img/layout/Navbar.png';
 import { FaEthereum } from 'react-icons/fa';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
-import { MdInfoOutline, MdNotificationsNone } from 'react-icons/md';
+import {
+  MdBarChart,
+  MdHome,
+  MdSend,
+  MdPerson,
+  MdInfoOutline,
+  MdLogout,
+  MdNotificationsNone,
+} from 'react-icons/md';
 import routes from 'routes';
 import { signOut } from 'next-auth/react';
 export default function HeaderLinks(props: {
@@ -57,10 +67,10 @@ export default function HeaderLinks(props: {
       bg={menuBg}
       flexWrap={secondary ? { base: 'wrap', md: 'nowrap' } : 'unset'}
       p="10px"
-      borderRadius="30px"
       boxShadow={shadow}
+      className="rounded-lg"
     >
-      <SearchBar
+      {/* <SearchBar
         mb={() => {
           if (secondary) {
             return { base: '10px', md: 'unset' };
@@ -69,8 +79,8 @@ export default function HeaderLinks(props: {
         }}
         me="10px"
         borderRadius="30px"
-      />
-      <Flex
+      /> */}
+      {/* <Flex
         bg={ethBg}
         display={secondary ? 'flex' : 'none'}
         borderRadius="30px"
@@ -103,9 +113,64 @@ export default function HeaderLinks(props: {
             ETH
           </Text>
         </Text>
-      </Flex>
-      <SidebarResponsive routes={routes} />
-      <Menu>
+      </Flex> */}
+      <div className="flex items-center w-full text-green-900 justify-evenly">
+        <Link href="/admin/default" className="flex flex-col items-center">
+          <Icon as={MdHome} width="20px" height="20px" color="inherit" />
+          <Text
+            className="flex items-center hover:underline"
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Painel
+          </Text>
+        </Link>
+        <Link
+          href="/admin/nft-marketplace"
+          className="flex flex-col items-center"
+        >
+          <Icon as={MdSend} width="20px" height="20px" color="inherit" />
+          <Text
+            className="flex items-center hover:underline"
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Solicitar
+          </Text>
+        </Link>
+        <Link href="/admin/data-tables" className="flex flex-col items-center">
+          <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />
+          <Text
+            className="flex items-center hover:underline"
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Envios
+          </Text>
+        </Link>
+        <Link href="/admin/profile" className="flex flex-col items-center">
+          <Icon as={MdPerson} width="20px" height="20px" />
+          <Text
+            className="flex items-center hover:underline"
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Admin
+          </Text>
+        </Link>
+        <Link href="/auth/sign-in" className="flex flex-col items-center">
+          <Icon as={MdLogout} width="20px" height="20px" color="inherit" />
+          <Text
+            className="flex items-center hover:underline"
+            fontSize="sm"
+            fontWeight="500"
+          >
+            Sair
+          </Text>
+        </Link>
+      </div>
+      {/* <SidebarResponsive routes={routes} /> */}
+      {/* <Menu>
         <MenuButton p="0px">
           <Icon
             mt="6px"
@@ -162,9 +227,8 @@ export default function HeaderLinks(props: {
             </MenuItem>
           </Flex>
         </MenuList>
-      </Menu>
-
-      <Menu>
+      </Menu> */}
+      {/* <Menu>
         <MenuButton p="0px">
           <Icon
             mt="6px"
@@ -224,9 +288,9 @@ export default function HeaderLinks(props: {
             </Link>
           </Flex>
         </MenuList>
-      </Menu>
-
-      <Button
+      </Menu> */}
+      {/* Dark mode button toggle */}
+      {/* <Button
         variant="no-hover"
         bg="transparent"
         p="0px"
@@ -243,8 +307,9 @@ export default function HeaderLinks(props: {
           color={navbarIcon}
           as={colorMode === 'light' ? IoMdMoon : IoMdSunny}
         />
-      </Button>
-      <Menu>
+      </Button> */}
+      {/* Admin toggle options */}
+      {/* <Menu>
         <MenuButton p="0px" style={{ position: 'relative' }}>
           <Box
             _hover={{ cursor: 'pointer' }}
@@ -308,15 +373,16 @@ export default function HeaderLinks(props: {
               px="14px"
               onClick={() => {
                 signOut({
-                  callbackUrl:"/auth/sign-in",
-                  redirect: true
-                })}}
+                  callbackUrl: '/auth/sign-in',
+                  redirect: true,
+                });
+              }}
             >
               <Text fontSize="sm">Sair</Text>
             </MenuItem>
           </Flex>
         </MenuList>
-      </Menu>
+      </Menu> */}
     </Flex>
   );
 }

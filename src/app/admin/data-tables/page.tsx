@@ -13,11 +13,11 @@ import AdminLayout from 'layouts/admin';
 
 export default function DataTables() {
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         mb="20px"
-        columns={{ sm: 1, md: 2 }}
         spacing={{ base: '20px', xl: '20px' }}
+        className="lg:w-[50%]"
       >
         <DevelopmentTable tableData={tableDataDevelopment} />
         <CheckTable tableData={tableDataCheck} />

@@ -56,24 +56,23 @@ import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 export default function Default() {
-
-  const { data: session, status } = useSession()
-  if (session === null && status === 'unauthenticated' ){
-    redirect("/auth/sign-in")
-  }
+  // const { data: session, status } = useSession()
+  // if (session === null && status === 'unauthenticated' ){
+  //   redirect("/auth/sign-in")
+  // }
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const negativeColor = useColorModeValue('red.600', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
 
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 6 }}
         gap="20px"
         mb="20px"
       >
-        <MiniStatistics
+        {/* <MiniStatistics
           startContent={
             <IconBox
               w="56px"
@@ -86,7 +85,7 @@ export default function Default() {
           }
           name="Negociação mensal"
           value="R$350,40"
-        />
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
@@ -98,21 +97,27 @@ export default function Default() {
               }
             />
           }
-          name="Gasto mensal com ligações"
-          value="R$120,00"
+          name="Pontos"
+          value="5.000"
         />
-        <MiniStatistics growth="+23%" name="Valores recebidos" value="R$574,34" />
+        {/* <MiniStatistics
+          growth="+23%"
+          name="Valores recebidos"
+          value="R$574,34"
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
               w="56px"
               h="56px"
-              bg="linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)"
-              icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
+              bg={boxBg}
+              icon={
+                <Icon w="28px" h="28px" as={MdAddTask} color={brandColor} />
+              }
             />
           }
-          name="Dívidas protestadas"
-          value="154"
+          name="Saques efetivados"
+          value="R$ 2.950,00"
         />
         <MiniStatistics
           startContent={
@@ -125,38 +130,32 @@ export default function Default() {
               }
             />
           }
-          name="Total de clientes"
-          value="2935"
+          name="Comprovantes enviados"
+          value="7"
         />
-                <MiniStatistics
+        {/* <MiniStatistics
           startContent={
             <IconBox
               w="56px"
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdAttachMoney} color={negativeColor} />
+                <Icon
+                  w="32px"
+                  h="32px"
+                  as={MdAttachMoney}
+                  color={negativeColor}
+                />
               }
             />
           }
           name="Clientes em atraso"
           value="2935"
-        />
+        /> */}
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
+      <SimpleGrid>
         <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">
-        <CheckTable tableData={tableDataCheck} />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <ComplexTable tableData={tableDataComplex} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <Tasks />
-          {/* <MiniCalendar h="100%" minW="100%" selectRange={false} /> */}
-        </SimpleGrid>
       </SimpleGrid>
     </Box>
   );
