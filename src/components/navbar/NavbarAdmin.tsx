@@ -73,15 +73,9 @@ export default function AdminNavbar(props: {
       borderRadius="16px"
       borderWidth="1.5px"
       borderStyle="solid"
-      transitionDelay="0s, 0s, 0s, 0s"
-      transitionDuration=" 0.25s, 0.25s, 0.25s, 0s"
-      transition-property="box-shadow, background-color, filter, border"
-      transitionTimingFunction="linear, linear, linear, linear"
       alignItems={{ xl: 'center' }}
-      display={secondary ? 'block' : 'flex'}
       minH="75px"
       justifyContent={{ xl: 'center' }}
-      lineHeight="25.6px"
       mx="auto"
       mt={secondaryMargin}
       pb="8px"
@@ -102,6 +96,7 @@ export default function AdminNavbar(props: {
         xl: 'calc(100vw - 350px)',
         '2xl': 'calc(100vw - 365px)',
       }}
+      className="flex flex-col mr-[12px]"
     >
       <Flex
         w="100%"
@@ -112,21 +107,19 @@ export default function AdminNavbar(props: {
         alignItems={{ xl: 'center' }}
         mb={gap}
       >
-        <Box mb={{ sm: '8px', md: '0px' }}>
-          <Breadcrumb>
-            <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
+        <Box mb={{ sm: '8px', md: '0px' }} className="">
+          <Breadcrumb className="flex items-center ">
+            <BreadcrumbItem color={secondaryText} fontSize="sm" className="">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
               </BreadcrumbLink>
             </BreadcrumbItem>
-
-            <BreadcrumbItem color={secondaryText} fontSize="sm">
+            <BreadcrumbItem color={secondaryText} fontSize="sm" className="">
               <BreadcrumbLink href="#" color={secondaryText}>
                 {brandText}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          {/* Here we create navbar brand, based on route name */}
           <Link
             color={mainText}
             href="#"
@@ -143,11 +136,12 @@ export default function AdminNavbar(props: {
             _focus={{
               boxShadow: 'none',
             }}
+            className=""
           >
             {brandText}
           </Link>
         </Box>
-        <Box ms="auto" className="min-[1199px]:hidden">
+        <Box ms="auto" className="min-[1199px]:hidden  w-full max-w-[550px]">
           <AdminNavbarLinks
             onOpen={props.onOpen}
             secondary={props.secondary}

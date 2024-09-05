@@ -52,7 +52,7 @@ function FilterableUserList() {
   return (
     <FormControl
       id="country"
-      className="bg-white p-[25px] rounded-md lg:w-[50%] flex flex-col"
+      className="bg-white p-[25px] rounded-3xl lg:w-[50%] flex flex-col"
     >
       <Text
         fontSize="22px"

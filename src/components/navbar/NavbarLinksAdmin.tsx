@@ -58,8 +58,8 @@ export default function HeaderLinks(props: {
       bg={menuBg}
       flexWrap={secondary ? { base: 'wrap', md: 'nowrap' } : 'unset'}
       p="10px"
-      borderRadius="30px"
       boxShadow={shadow}
+      className="rounded-lg"
     >
       {/* <SearchBar
         mb={() => {
@@ -105,10 +105,10 @@ export default function HeaderLinks(props: {
           </Text>
         </Text>
       </Flex> */}
-      <div className="flex gap-[24px]">
+      <div className="flex items-center w-full justify-evenly">
         <Link href="/admin/default">
           <Text
-            className="flex items-center px-[8px] hover:underline"
+            className="flex items-center hover:underline"
             color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
@@ -118,7 +118,7 @@ export default function HeaderLinks(props: {
         </Link>
         <Link href="/admin/nft-marketplace">
           <Text
-            className="flex items-center px-[8px] hover:underline"
+            className="flex items-center hover:underline"
             color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
@@ -128,7 +128,7 @@ export default function HeaderLinks(props: {
         </Link>
         <Link href="/admin/data-tables">
           <Text
-            className="flex items-center px-[8px] hover:underline"
+            className="flex items-center hover:underline"
             color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
@@ -138,7 +138,7 @@ export default function HeaderLinks(props: {
         </Link>
         <Link href="/admin/profile">
           <Text
-            className="flex items-center px-[8px] hover:underline"
+            className="flex items-center hover:underline"
             color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
@@ -148,7 +148,7 @@ export default function HeaderLinks(props: {
         </Link>
         <Link href="/auth/sign-in">
           <Text
-            className="flex items-center px-[8px] hover:underline mr-[8px]"
+            className="flex items-center hover:underline"
             color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
