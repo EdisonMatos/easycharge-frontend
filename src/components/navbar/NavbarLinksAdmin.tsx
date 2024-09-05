@@ -146,7 +146,13 @@ export default function HeaderLinks(props: {
             Admin
           </Text>
         </Link>
-        <Link href="/auth/sign-in">
+        <Link href="/auth/sign-in"
+          onClick={() => {
+            signOut({
+              callbackUrl: "/auth/sign-in",
+              redirect: true
+            })
+          }}>
           <Text
             className="flex items-center hover:underline"
             color={textColorBrand}

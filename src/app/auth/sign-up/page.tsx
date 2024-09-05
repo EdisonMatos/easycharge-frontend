@@ -131,7 +131,7 @@ export default function SignUp() {
           },
         };
         fetch(
-          `http://192.168.1.236:8080/users/usernameIsAvailable/${event.target.value}`,
+          `http://localhost:8080/users/usernameIsAvailable/${event.target.value}`,
           requestOptions,
         )
           .then((response) => response.json())
@@ -179,7 +179,7 @@ export default function SignUp() {
       },
     };
 
-    fetch(`http://192.168.1.236:8080/users`, requestOptions)
+    fetch(`http://localhost:8080/users`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -192,6 +192,9 @@ export default function SignUp() {
           return;
         }
         setIsRegistered(true);
+        setTimeout(()=>{
+          route.push("/auth/sign-in")
+        }, 4000)
       });
     event.preventDefault();
   };
@@ -583,7 +586,7 @@ const SignUpError = ({ error }) => {
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {errorMessage}{' '}
       {error === 'UserAlreadyCreated' ? (
-        <Link href={'http://192.168.1.236:3000/auth/sign-in'}>
+        <Link href={'http://localhost:3000/auth/sign-in'}>
           <Text color={textColorError} fontWeight="300" fontSize="14px" as="u">
             tente logar
           </Text>

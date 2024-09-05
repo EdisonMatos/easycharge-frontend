@@ -11,16 +11,22 @@ import {
   Input,
 } from '@chakra-ui/react';
 import Card from 'components/card/Card';
-import { useRouter } from 'next/navigation'; // Importando o useRouter para redirecionamento
+import { redirect, useRouter } from 'next/navigation'; // Importando o useRouter para redirecionamento
+import { useSession } from 'next-auth/react';
+import { jwtDecode } from "jwt-decode";
 
 export default function NftMarketplace() {
+  const { data: session, status } = useSession()
+  if (session === null && status === 'unauthenticated') {
+    redirect("/auth/sign-in")
+  }
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const router = useRouter(); // Inicializando o useRouter
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [identification, setIdentification] = useState('');
 
-  const handleFileChange = (event: { target: { files: any[] } }) => {
+  const handleFileChange = (event: { target: { files: FileList } }) => {
     setSelectedFile(event.target.files[0]);
   };
 
@@ -28,13 +34,34 @@ export default function NftMarketplace() {
     setIdentification(event.target.value);
   };
 
-  const handleUpload = () => {
+  const handleUpload = (event: any) => {
     if (selectedFile && identification) {
+      //@ts-ignore
+      const token = session?.accessToken
+      const decoded = jwtDecode(token);
+
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          identification,
+          //@ts-ignore
+          customerEmail: decoded.email,
+          receiptImage: "something"
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+      };
+      fetch(`http://localhost:8080/receipts`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+      event.preventDefault();
       console.log('Uploading:', selectedFile);
       setSelectedFile(null);
       setIdentification('');
 
-      // Exibe o alerta e redireciona após o clique em OK
       window.alert(
         'Seu comprovante foi enviado com sucesso. \nVocê será redirecionado para a seção de "Meus Envios" para acompanhar sua solicitação.',
       );
@@ -62,9 +89,7 @@ export default function NftMarketplace() {
             Após fazer o depósito, utilize o botão abaixo para enviar para nós o
             comprovante. Após confirmarmos, iremos disponibilizar o seus pontos,
             que serão convertidos em dinheiro e depositados em sua conta. <br />
-            <br />
-            Você pode acompanhar o andamento da sua solicitação em "Meus Envios"
-          </p>
+            <br />Você pode acompanhar o andamento da sua solicitação em "Meus Envios"</p>
           <Text
             className="my-[24px]"
             color={textColor}

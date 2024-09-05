@@ -1,4 +1,5 @@
 import { Icon } from '@chakra-ui/react';
+import { signOut } from 'next-auth/react';
 import {
   MdBarChart,
   MdPerson,
@@ -50,7 +51,12 @@ const routes: IRoute[] = [
     name: 'Sair',
     layout: '/auth',
     path: '/sign-in',
-    icon: <Icon as={MdLogout} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdLogout} width="20px" height="20px" color="inherit" onClick={()=>{
+      signOut({
+        callbackUrl: "/auth/sign-in",
+        redirect: true
+      })
+    }}/>,
   },
   // {
   //   name: 'RTL Admin',
