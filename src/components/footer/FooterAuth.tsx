@@ -15,10 +15,6 @@ export default function Footer(props: { [x: string]: any }) {
   return (
     <Flex
       zIndex="3"
-      flexDirection={{
-        base: 'column',
-        lg: 'row',
-      }}
       alignItems={{
         base: 'center',
         xl: 'start',
@@ -27,6 +23,7 @@ export default function Footer(props: { [x: string]: any }) {
       px={{ base: '30px', md: '0px' }}
       pb="30px"
       {...props}
+      className="flex justify-center "
     >
       <Text
         color={textColor}
@@ -35,6 +32,7 @@ export default function Footer(props: { [x: string]: any }) {
           xl: 'start',
         }}
         mb={{ base: '20px', lg: '0px' }}
+        className=""
       >
         {' '}
         &copy; {new Date().getFullYear()}
