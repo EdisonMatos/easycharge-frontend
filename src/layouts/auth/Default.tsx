@@ -16,15 +16,13 @@ function AuthIllustration(props: {
   const { children, illustrationBackground } = props;
   // Chakra color mode
   return (
-    <Flex bg={authBg} position="relative" h="max-content">
-      <Flex
-        mx={{ base: 'auto', xl: '90px' }}
-        pt={{ sm: '50px', md: '0px' }}
-        px={{ lg: '30px', xl: '0px' }}
-        ps={{ xl: '70px' }}
-        justifyContent="start"
-        direction="column"
-      >
+    <Flex
+      bg={authBg}
+      position="relative"
+      h="max-content"
+      className="justify-center"
+    >
+      <Flex justifyContent="start" direction="column" className="">
         {children}
         <Box
           display={{ base: 'none', md: 'block' }}
@@ -33,9 +31,10 @@ function AuthIllustration(props: {
           w={{ lg: '50vw', '2xl': '44vw' }}
           position="absolute"
           right="0px"
-          className="hidden min-[1200px]:block"
+          className="hidden "
+          // className="hidden min-[1200px]:block"
         >
-          <Flex
+          {/* <Flex
             style={{ backgroundImage: `url(${illustrationBackground})` }}
             justify="center"
             align="end"
@@ -46,9 +45,9 @@ function AuthIllustration(props: {
             position="absolute"
             borderBottomLeftRadius={{ lg: '120px', xl: '200px' }}
             className="ml-[60px]"
-          />
+          /> */}
         </Box>
-        <Footer mb={{ xl: '3vh' }} />
+        <Footer />
       </Flex>
       {/* <FixedPlugin /> */}
     </Flex>
