@@ -83,8 +83,7 @@ export default function ForgotPassword() {
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: '90%',
-          md: '50%',
+          sm: '100%',
         }}
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
