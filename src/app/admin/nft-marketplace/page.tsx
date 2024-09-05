@@ -45,7 +45,7 @@ export default function NftMarketplace() {
   };
 
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }} className="lg:w-[50%]">
+    <Box pt={{ base: '140px', md: '80px', xl: '0px' }} className="lg:w-[50%]">
       {/* Main Fields */}
       <Flex flexDirection="column">
         <Card className="p-[25px]" p="0px">
