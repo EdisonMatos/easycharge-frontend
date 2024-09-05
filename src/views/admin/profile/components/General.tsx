@@ -15,7 +15,7 @@ function FilterableUserList() {
   const [points, setPoints] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [foundUser, setFoundUser] = useState(null);
-  const [searchClicked, setSearchClicked] = useState(false); // Estado para controlar se o botão foi clicado
+  const [searchClicked, setSearchClicked] = useState(false);
 
   // Lista de usuários com UUID fixos
   const users = [
@@ -34,12 +34,30 @@ function FilterableUserList() {
 
   // Função para buscar usuário
   const handleSearch = () => {
-    setSearchClicked(true); // Define que o botão foi clicado
+    setSearchClicked(true);
     const user = users.find((user) => user.id === searchInput);
     if (user) {
       setFoundUser(user);
     } else {
       setFoundUser(null);
+    }
+  };
+
+  // Função para adicionar pontos com alerta de confirmação
+  const handleAddPoints = () => {
+    const confirmation = window.confirm(
+      `Tem certeza que deseja adicionar ${points} pontos para o usuário ${foundUser.name}?`,
+    );
+    if (confirmation) {
+      alert('Pontos adicionados com sucesso!');
+      window.location.reload(); // Atualiza a página após confirmar
+    } else {
+      alert('Operação cancelada.');
+      // Retorna ao estado inicial
+      setPoints('');
+      setSearchInput('');
+      setFoundUser(null);
+      setSearchClicked(false);
     }
   };
 
@@ -82,7 +100,7 @@ function FilterableUserList() {
       {/* Renderizar usuário localizado ou mensagem de erro apenas após o clique */}
       {searchClicked &&
         (foundUser ? (
-          <Table mt="4" className="w-[100%] bg-green-50 rounded-2xl">
+          <Table mt="4" className="bg-green-50 rounded-2xl">
             <Tbody>
               <Tr>
                 <Td fontWeight="bold">Usuário localizado:</Td>
@@ -110,7 +128,7 @@ function FilterableUserList() {
       {/* Input de pontos só renderizado se o usuário for localizado */}
       {foundUser && (
         <>
-          <FormLabel mt="4">Quantidade de Pontos:</FormLabel>
+          <FormLabel mt="4">Adicionar Pontos:</FormLabel>
           <Input
             placeholder="Digite a quantidade"
             value={points}
@@ -123,6 +141,7 @@ function FilterableUserList() {
             className="w-[50%] rounded-md"
             colorScheme="brand"
             isDisabled={!points} // Só habilita se o input de pontos estiver preenchido
+            onClick={handleAddPoints} // Adiciona pontos com confirmação
           >
             Adicionar Pontos
           </Button>
