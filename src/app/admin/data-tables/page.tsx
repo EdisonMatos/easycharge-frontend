@@ -13,7 +13,7 @@ import AdminLayout from 'layouts/admin';
 
 export default function DataTables() {
   return (
-    <Box pt={{ base: '140px', md: '80px', xl: '0px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         mb="20px"
         spacing={{ base: '20px', xl: '20px' }}

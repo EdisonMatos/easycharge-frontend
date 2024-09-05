@@ -66,7 +66,7 @@ export default function Default() {
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
 
   return (
-    <Box pt={{ base: '140px', md: '80px', xl: '0px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 6 }}
         gap="20px"

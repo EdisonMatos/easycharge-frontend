@@ -5,7 +5,6 @@ import {
   Button,
   Center,
   Flex,
-  Icon,
   Image,
   Menu,
   MenuButton,
@@ -16,6 +15,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
+import { Icon } from '@chakra-ui/react';
+
 import Link from 'next/link';
 // Custom Components
 import { ItemContent } from 'components/menu/ItemContent';
@@ -25,7 +26,15 @@ import { SidebarResponsive } from 'components/sidebar/Sidebar';
 import navImage from '/public/img/layout/Navbar.png';
 import { FaEthereum } from 'react-icons/fa';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
-import { MdInfoOutline, MdNotificationsNone } from 'react-icons/md';
+import {
+  MdBarChart,
+  MdHome,
+  MdSend,
+  MdPerson,
+  MdInfoOutline,
+  MdLogout,
+  MdNotificationsNone,
+} from 'react-icons/md';
 import routes from 'routes';
 import { signOut } from 'next-auth/react';
 export default function HeaderLinks(props: {
@@ -105,51 +114,54 @@ export default function HeaderLinks(props: {
           </Text>
         </Text>
       </Flex> */}
-      <div className="flex items-center w-full justify-evenly">
-        <Link href="/admin/default">
+      <div className="flex items-center w-full text-green-900 justify-evenly">
+        <Link href="/admin/default" className="flex flex-col items-center">
+          <Icon as={MdHome} width="20px" height="20px" color="inherit" />
           <Text
             className="flex items-center hover:underline"
-            color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
           >
             Painel
           </Text>
         </Link>
-        <Link href="/admin/nft-marketplace">
+        <Link
+          href="/admin/nft-marketplace"
+          className="flex flex-col items-center"
+        >
+          <Icon as={MdSend} width="20px" height="20px" color="inherit" />
           <Text
             className="flex items-center hover:underline"
-            color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
           >
             Solicitar
           </Text>
         </Link>
-        <Link href="/admin/data-tables">
+        <Link href="/admin/data-tables" className="flex flex-col items-center">
+          <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />
           <Text
             className="flex items-center hover:underline"
-            color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
           >
             Envios
           </Text>
         </Link>
-        <Link href="/admin/profile">
+        <Link href="/admin/profile" className="flex flex-col items-center">
+          <Icon as={MdPerson} width="20px" height="20px" />
           <Text
             className="flex items-center hover:underline"
-            color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
           >
             Admin
           </Text>
         </Link>
-        <Link href="/auth/sign-in">
+        <Link href="/auth/sign-in" className="flex flex-col items-center">
+          <Icon as={MdLogout} width="20px" height="20px" color="inherit" />
           <Text
             className="flex items-center hover:underline"
-            color={textColorBrand}
             fontSize="sm"
             fontWeight="500"
           >
