@@ -123,7 +123,7 @@ export default function HeaderLinks(props: {
             fontSize="sm"
             fontWeight="500"
           >
-            Enviar
+            Solicitar
           </Text>
         </Link>
         <Link href="/admin/data-tables">

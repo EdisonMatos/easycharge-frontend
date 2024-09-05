@@ -9,10 +9,12 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Image,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 import { isWindowAvailable } from 'utils/navigation';
+import pay4gainsLogo from '../../../public/img/auth/auth-logo.png';
 
 export default function AdminNavbar(props: {
   secondary: boolean;
@@ -96,7 +98,7 @@ export default function AdminNavbar(props: {
         xl: 'calc(100vw - 350px)',
         '2xl': 'calc(100vw - 365px)',
       }}
-      className="flex flex-col mr-[12px]"
+      className="flex flex-col min-[1199px]:hidden"
     >
       <Flex
         w="100%"
@@ -108,7 +110,14 @@ export default function AdminNavbar(props: {
         mb={gap}
       >
         <Box mb={{ sm: '8px', md: '0px' }} className="">
-          <Breadcrumb className="flex items-center ">
+          <div className="flex justify-center">
+            <Image
+              alt=""
+              src={pay4gainsLogo.src}
+              className="h-[80px] mb-[12px] min-[768px]:h-[50px]"
+            />
+          </div>
+          {/* <Breadcrumb className="flex items-center ">
             <BreadcrumbItem color={secondaryText} fontSize="sm" className="">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
@@ -139,7 +148,7 @@ export default function AdminNavbar(props: {
             className=""
           >
             {brandText}
-          </Link>
+          </Link> */}
         </Box>
         <Box ms="auto" className="min-[1199px]:hidden  w-full max-w-[550px]">
           <AdminNavbarLinks
