@@ -97,7 +97,7 @@ export default function RecoveryPassword() {
       },
     };
 
-    fetch(`http://localhost:8080/users/recoveryPassword`, requestOptions)
+    fetch(`https://api.pay4gains.com/users/recoveryPassword`, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.error) {

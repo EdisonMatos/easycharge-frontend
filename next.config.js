@@ -10,6 +10,7 @@ const nextConfig = {
       'i.ibb.co',
       'scontent.fotp8-1.fna.fbcdn.net',
       'localhost',
+      'api.pay4gains.com'
       
     ],
     // Make ENV

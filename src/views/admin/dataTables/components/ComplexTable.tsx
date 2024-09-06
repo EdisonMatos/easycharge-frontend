@@ -62,7 +62,7 @@ export default function ComplexTable() {
         },
       };
       //@ts-ignore
-      fetch(`http://localhost:8080/receipts/findAllPerUserEmail/${decoded.email}`, requestOptions)
+      fetch(`https://api.pay4gains.com/receipts/findAllPerUserEmail/${decoded.email}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           setData(data)

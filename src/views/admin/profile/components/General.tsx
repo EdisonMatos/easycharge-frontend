@@ -35,7 +35,7 @@ function FilterableUserList() {
     };
     if (email) {
       setSearchClicked(true);
-      fetch(`http://localhost:8080/users/findByEmail/${email}`, requestOptions)
+      fetch(`https://api.pay4gains.com/users/findByEmail/${email}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data) {
@@ -61,7 +61,7 @@ function FilterableUserList() {
     setSearchClicked(true);
 
 
-    fetch(`http://localhost:8080/users/${searchInput}`, requestOptions)
+    fetch(`https://api.pay4gains.com/users/${searchInput}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data) {
@@ -98,7 +98,7 @@ function FilterableUserList() {
     );
     if (confirmation) {
       
-      fetch(`http://localhost:8080/users/addPoints/${searchInput}/${receiptId}`, requestOptions)
+      fetch(`https://api.pay4gains.com/users/addPoints/${searchInput}/${receiptId}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data) {

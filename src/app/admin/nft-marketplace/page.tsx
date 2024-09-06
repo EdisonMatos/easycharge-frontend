@@ -54,7 +54,7 @@ export default function NftMarketplace() {
         // },
       };
       //@ts-ignore
-      fetch(`http://localhost:8080/receipts`, requestOptions)
+      fetch(`https://api.pay4gains.com/receipts`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

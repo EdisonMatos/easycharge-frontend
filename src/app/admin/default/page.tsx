@@ -78,7 +78,7 @@ export default function Default() {
         },  
       };
       //@ts-ignore
-      fetch(`http://localhost:8080/users/findByEmail/${decoded.email}`, requestOptions)
+      fetch(`https://api.pay4gains.com/users/findByEmail/${decoded.email}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           const {receipts, availablePoints, totalWithdraw } = data

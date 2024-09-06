@@ -65,7 +65,7 @@ export default function ForgotPassword() {
       },
     };
 
-    fetch(`http://localhost:8080/users/changePassword`, requestOptions)
+    fetch(`https://api.pay4gains.com/users/changePassword`, requestOptions)
       .then((response) => response ?? response.json())
       .then((data) => {
         if (data.error) {
