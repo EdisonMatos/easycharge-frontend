@@ -4,9 +4,10 @@
 import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 import { IRoute } from 'types/navigation';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { jwtDecode } from "jwt-decode";
 
 interface SidebarLinksProps {
   routes: IRoute[];
@@ -26,6 +27,13 @@ export function SidebarLinks(props: SidebarLinksProps) {
   let activeIcon = useColorModeValue('brand.500', 'white');
   let textColor = useColorModeValue('secondaryGray.500', 'white');
   let brandColor = useColorModeValue('brand.500', 'brand.400');
+  const { data: session, status } = useSession()
+  if (session === null && status === 'unauthenticated') {
+    redirect("/")
+  }
+  //@ts-ignore
+  const token = session?.accessToken
+  const decoded = jwtDecode(token);
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = useCallback(
@@ -45,6 +53,8 @@ export function SidebarLinks(props: SidebarLinksProps) {
         route.layout === '/rtl'
       ) {
         return (
+          //@ts-ignore
+          decoded.role !== "ADMIN" ? <></> :
           <Link onClick={()=>{
             if(route.name === "Sair") return signOut({
               callbackUrl: "/auth/sign-in",

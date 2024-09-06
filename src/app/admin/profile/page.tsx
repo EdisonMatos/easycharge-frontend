@@ -26,13 +26,28 @@ import Upload from 'views/admin/profile/components/Upload';
 import banner from 'img/auth/banner.png';
 import avatar from 'img/avatars/avatar4.png';
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { jwtDecode } from "jwt-decode";
 
 export default function ProfileOverview() {
   const [multiplier, setMultiplier] = useState<string>('');
   const [currentMultiplier, setCurrentMultiplier] = useState<number>(0);
   const [buttonActive, setButtonActive] = useState<boolean>(false);
   const toast = useToast();
+  const { data: session, status } = useSession()
+  if (session === null && status === 'unauthenticated') {
+    redirect("/")
+  }
+  //@ts-ignore
+  const token = session?.accessToken
+  const decoded = jwtDecode(token);
+  //@ts-ignore
+  if(decoded.role !== "ADMIN"){
+    redirect("/")    
+  }
 
+  
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
