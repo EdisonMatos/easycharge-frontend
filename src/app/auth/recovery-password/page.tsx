@@ -357,7 +357,7 @@ const PasswordError = () => {
   const textColorError = useColorModeValue('red.700', 'white');
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
-      Senhas não conhecidem!
+      Senhas não coincidem!
     </Text>
   );
 };
