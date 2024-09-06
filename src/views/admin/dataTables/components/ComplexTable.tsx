@@ -46,7 +46,6 @@ export default function ComplexTable() {
   const [data, setData] = React.useState(() => []);
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const { data: session, status } = useSession()
-  console.log(session)
   if (session === null && status === 'unauthenticated') {
     redirect("/auth/sign-in")
   }
@@ -67,7 +66,6 @@ export default function ComplexTable() {
         .then(response => response.json())
         .then(data => {
           setData(data)
-          console.log(data)
         })
     }
   }, [session])

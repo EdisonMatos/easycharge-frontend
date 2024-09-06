@@ -97,10 +97,9 @@ export default function RecoveryPassword() {
       },
     };
 
-    fetch(`http://192.168.1.236:8080/users/recoveryPassword`, requestOptions)
+    fetch(`http://localhost:8080/users/recoveryPassword`, requestOptions)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.error) {
           if(data.error === "Unauthorized"){
             setIsChanged(true)

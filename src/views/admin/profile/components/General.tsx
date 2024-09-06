@@ -102,7 +102,6 @@ function FilterableUserList() {
         .then(response => response.json())
         .then(data => {
           if (data) {
-            console.log(data)
             alert(`${points} pontos adicionados com sucesso!`);
           }
         })
