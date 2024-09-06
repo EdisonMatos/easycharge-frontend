@@ -313,7 +313,8 @@ const errors = {
   EmailSignin: 'Check your email address.',
   CredentialsSignin:
     'Login falhou. Verifique se as credenciais providas estão corretas.',
-  default: 'Não foi possível entrar.',
+  default:
+    'Não foi possível entrar. Verifique se o email ou a senha estão corretos e tente novamente..',
 };
 
 //@ts-ignore

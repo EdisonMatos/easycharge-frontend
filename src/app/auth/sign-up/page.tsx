@@ -192,9 +192,9 @@ export default function SignUp() {
           return;
         }
         setIsRegistered(true);
-        setTimeout(()=>{
-          route.push("/auth/sign-in")
-        }, 4000)
+        setTimeout(() => {
+          route.push('/auth/sign-in');
+        }, 4000);
       });
     event.preventDefault();
   };
@@ -574,7 +574,8 @@ const errors = {
     'Cadastro falhou. Verifique se as informações providas estão corretas.',
   UserAlreadyCreated: 'Já existe uma conta com esses dados. Ao invés disso,',
   UserIsUnavailable: 'Nome de usuário está em uso',
-  default: 'Não foi possível entrar.',
+  default:
+    'Não foi possível entrar. Verifique se o email ou a senha estão corretos e tente novamente..',
 };
 
 //@ts-ignore
