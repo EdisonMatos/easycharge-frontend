@@ -71,7 +71,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
             fontWeight="700"
             lineHeight="100%"
           >
-            R$ 1.850,39
+            Em breve
           </Text>
           {/* <Flex align="center" mb="20px">
             <Text
@@ -104,8 +104,8 @@ export default function TotalSpent(props: { [x: string]: any }) {
               fontWeight="500"
               className="ml-[10px]"
             >
-              Mantenha a maior variação possível afim de evitar dor de cabeça
-              com as plataformas envolvidas!
+              Demonstrativo com histórico de cashbacks por período e análise de
+              variação. Aguarde!
             </Text>
           </Flex>
         </Flex>
@@ -116,6 +116,9 @@ export default function TotalSpent(props: { [x: string]: any }) {
           />
         </Box>
       </Flex>
+      <p className="text-[12px] text-green-800 w-full text-end">
+        Obs: Valores fictícios para finalidade de exemplo.
+      </p>
     </Card>
   );
 }

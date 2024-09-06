@@ -116,7 +116,7 @@ export default function Default() {
               }
             />
           }
-          name="Saques efetivados"
+          name="Disponível para saque"
           value="R$ 2.950,00"
         />
         <MiniStatistics
