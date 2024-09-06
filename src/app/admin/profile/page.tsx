@@ -29,60 +29,55 @@ import React, { useEffect, useState } from 'react';
 
 export default function ProfileOverview() {
   const [multiplier, setMultiplier] = useState<string>('');
-  const [currentMultiplier, setCurrentMultiplier ] = useState<number>(0);
+  const [currentMultiplier, setCurrentMultiplier] = useState<number>(0);
   const [buttonActive, setButtonActive] = useState<boolean>(false);
   const toast = useToast();
-  
+
   useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json"
-        },  
-      };
-
-      fetch(`https://api.pay4gains.com/multiplier`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          setCurrentMultiplier(data.value)
-        })
-    
-
-
-  }, [])
+    fetch(`https://api.pay4gains.com/multiplier`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setCurrentMultiplier(data.value);
+      });
+  }, [multiplier]);
   const handleMultiplierChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event.target.value;
     // Permitir apenas números e vírgulas
-    if (/^[0-9]*[,]?[0-9]*$/.test(value)) {
+    if (/^[0-9]*[.]?[0-9]*$/.test(value)) {
       setMultiplier(value);
       setButtonActive(value.trim() !== '');
     }
   };
 
   const handleUpdateMultiplier = () => {
-
     const confirmed = window.confirm(
       `Tem certeza que deseja atualizar o multiplicador para ${multiplier}?`,
     );
     if (confirmed) {
       const requestOptions = {
         method: 'POST',
-        body:JSON.stringify({
-          value: multiplier
+        body: JSON.stringify({
+          value: parseFloat(parseFloat(multiplier).toFixed(4)),
         }),
         headers: {
-          "Content-Type": "application/json"
-        },  
+          'Content-Type': 'application/json',
+        },
       };
       //@ts-ignore
       fetch(`https://api.pay4gains.com/multiplier`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-        })
+        .then((response) => response.json())
+        .then((data) => {
+          setMultiplier(data.value);
+        });
       toast({
         title: 'Multiplicador atualizado com sucesso.',
         status: 'success',
@@ -121,7 +116,9 @@ export default function ProfileOverview() {
         </p>
         <p>
           O multiplicador atual é:
-          <span className="ml-[10px] font-bold text-green-500">{currentMultiplier}</span>
+          <span className="ml-[10px] font-bold text-green-500">
+            {currentMultiplier}
+          </span>
         </p>
 
         <FormLabel className="mt-[20px]">Novo multiplicador:</FormLabel>
