@@ -41,50 +41,51 @@ export default function Validate() {
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
 
-  const [validation, setValidation] = React.useState({isValidated: false, message:""});
+  const [validation, setValidation] = React.useState({
+    isValidated: false,
+    message: '',
+  });
   const [isLoading, setIsLoading] = React.useState(true);
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
-  const email = searchParams.get('email')
-  const route = useRouter()
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const email = searchParams.get('email');
+  const route = useRouter();
   useEffect(() => {
-
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({
         token,
-        email
+        email,
       }),
       headers: {
-        "Content-Type": "application/json"
-      },  
+        'Content-Type': 'application/json',
+      },
     };
     fetch(`http://localhost:8080/users/validate`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        let message = "Link de confirmação inválido ou expirado!"
-        let isValidated = false
-        setIsLoading(false)
-        if(data.isValidated){
-          message = "Cadastro concluído com sucesso!"
-          isValidated = data.isValidated
+      .then((response) => response.json())
+      .then((data) => {
+        let message = 'Link de confirmação inválido ou expirado!';
+        let isValidated = false;
+        setIsLoading(false);
+        if (data.isValidated) {
+          message = 'Cadastro concluído com sucesso!';
+          isValidated = data.isValidated;
         }
-        setValidation({ isValidated, message })
+        setValidation({ isValidated, message });
 
-        setTimeout(()=>{
-          route.push("/auth/sign-in")
-        }, 4000)
-      })
-
-  }, [])
+        setTimeout(() => {
+          route.push('/auth/sign-in');
+        }, 4000);
+      });
+  }, []);
 
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/bg-purple2.png'}>
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: "90%",
-          md: "50%"
+          sm: '90%',
+          md: '50%',
         }}
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
@@ -101,28 +102,25 @@ export default function Validate() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
-
         <Box me="auto">
           {isLoading ? (
             <Spinner
-              thickness='4px'
-              speed='0.65s'
-              emptyColor='gray.200'
-              color='blue.500'
-              size='xl'
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
             />
           ) : (
             <Heading color={textColor} fontSize="36px" mb="10px">
-              { validation.message }
-            </Heading>)
-          }
+              {validation.message}
+            </Heading>
+          )}
         </Box>
-
       </Flex>
     </DefaultAuthLayout>
   );
 }
-
 
 const errors = {
   Signin: 'Try signing with a different account.',
@@ -136,7 +134,8 @@ const errors = {
   EmailSignin: 'Check your email address.',
   CredentialsSignin:
     'Login falhou. Verifique se as credenciais providas estão corretas.',
-  default: 'Não foi possível entrar.',
+  default:
+    'Não foi possível entrar. Verifique se o email ou a senha estão corretos e tente novamente..',
 };
 
 //@ts-ignore
@@ -147,5 +146,6 @@ const SignInError = ({ error }) => {
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {errorMessage}
-    </Text>)
+    </Text>
+  );
 };
