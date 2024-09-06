@@ -82,8 +82,7 @@ export default function ForgotPassword() {
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: '90%',
-          md: '50%',
+          sm: '100%',
         }}
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
@@ -217,7 +216,8 @@ const errors = {
     'Cadastro falhou. Verifique se as informações providas estão corretas.',
   UserAlreadyCreated: 'Já existe uma conta com esses dados. Ao invés disso,',
   UserIsUnavailable: 'Nome de usuário está em uso',
-  default: 'Não foi possível entrar.',
+  default:
+    'Não foi possível entrar. Verifique se o email ou a senha estão corretos e tente novamente.',
 };
 
 //@ts-ignore

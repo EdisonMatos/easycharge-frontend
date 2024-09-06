@@ -59,6 +59,7 @@ import { jwtDecode } from "jwt-decode";
 export default function Default() {
   const [userData, setUserData] = useState({availablePoints:0, totalWithdraw:0, receipts:[]});
   const { data: session, status } = useSession()
+  const [currentMultiplier, setCurrentMultiplier ] = useState<number>(0);
   if (session === null && status === 'unauthenticated') {
     redirect("/auth/sign-in")
   }
@@ -84,6 +85,12 @@ export default function Default() {
           const {receipts, availablePoints, totalWithdraw } = data
           setUserData({receipts, availablePoints, totalWithdraw})
         })
+
+        fetch(`https://api.pay4gains.com/multiplier`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          setCurrentMultiplier(data.value)
+        })
     }
 
 
@@ -94,7 +101,7 @@ export default function Default() {
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
 
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, '2xl': 6 }}
         gap="20px"
@@ -144,8 +151,8 @@ export default function Default() {
               }
             />
           }
-          name="Saques efetivados"
-          value={`R$ ${userData.totalWithdraw}`}
+          value={`R$ ${userData.availablePoints * currentMultiplier}`}
+          name="Disponível para saque"
         />
         <MiniStatistics
           startContent={

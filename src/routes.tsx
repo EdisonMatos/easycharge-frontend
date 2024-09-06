@@ -29,7 +29,7 @@ const routes: IRoute[] = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
   },
   {
-    name: 'Enviar Comprovante',
+    name: 'Solicitar',
     layout: '/admin',
     path: '/nft-marketplace',
     icon: <Icon as={MdSend} width="20px" height="20px" color="inherit" />,
