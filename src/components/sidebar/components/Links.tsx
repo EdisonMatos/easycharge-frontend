@@ -4,9 +4,10 @@
 import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 import { IRoute } from 'types/navigation';
-import { usePathname } from 'next/navigation';
-import { useCallback } from 'react';
-import { signOut } from 'next-auth/react';
+import { redirect, usePathname } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { signOut, useSession } from 'next-auth/react';
+import { jwtDecode } from "jwt-decode";
 
 interface SidebarLinksProps {
   routes: IRoute[];
@@ -17,7 +18,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
 
   //   Chakra color mode
   const pathname = usePathname();
-
+  const [role, setRole] = useState("")
   let activeColor = useColorModeValue('gray.700', 'white');
   let inactiveColor = useColorModeValue(
     'secondaryGray.600',
@@ -26,6 +27,12 @@ export function SidebarLinks(props: SidebarLinksProps) {
   let activeIcon = useColorModeValue('brand.500', 'white');
   let textColor = useColorModeValue('secondaryGray.500', 'white');
   let brandColor = useColorModeValue('brand.500', 'brand.400');
+  const { data: session, status } = useSession()
+  if (session === null && status === 'unauthenticated') {
+    redirect("/")
+  }
+  //@ts-ignore
+
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = useCallback(
@@ -35,8 +42,19 @@ export function SidebarLinks(props: SidebarLinksProps) {
     [pathname],
   );
 
+  useEffect(() => {
+    if (session) {
+      //@ts-ignore
+      const token = session?.accessToken
+      const decoded = jwtDecode(token);
+      //@ts-ignore
+      setRole(decoded.role)
+    }
+  }, [])
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes: IRoute[]) => {
+    //@ts-ignore
+
     return routes.map((route, index: number) => {
 
       if (
@@ -45,87 +63,89 @@ export function SidebarLinks(props: SidebarLinksProps) {
         route.layout === '/rtl'
       ) {
         return (
-          <Link onClick={()=>{
-            if(route.name === "Sair") return signOut({
-              callbackUrl: "/auth/sign-in",
-              redirect: true
-            })
-          }} key={index} href={route.layout + route.path}>
-            {route.icon ? (
-              <Box>
-                <HStack
-                  spacing={
-                    activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
-                  }
-                  py="5px"
-                  ps="10px"
-                >
-                  <Flex w="100%" alignItems="center" justifyContent="center">
+          //@ts-ignore
+          role !== "ADMIN" ? <></> :
+            <Link onClick={() => {
+              if (route.name === "Sair") return signOut({
+                callbackUrl: "/auth/sign-in",
+                redirect: true
+              })
+            }} key={index} href={route.layout + route.path}>
+              {route.icon ? (
+                <Box>
+                  <HStack
+                    spacing={
+                      activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
+                    }
+                    py="5px"
+                    ps="10px"
+                  >
+                    <Flex w="100%" alignItems="center" justifyContent="center">
+                      <Box
+                        color={
+                          activeRoute(route.path.toLowerCase())
+                            ? activeIcon
+                            : textColor
+                        }
+                        me="18px"
+                      >
+                        {route.icon}
+                      </Box>
+                      <Text
+                        me="auto"
+                        color={
+                          activeRoute(route.path.toLowerCase())
+                            ? activeColor
+                            : textColor
+                        }
+                        fontWeight={
+                          activeRoute(route.path.toLowerCase())
+                            ? 'bold'
+                            : 'normal'
+                        }
+                      >
+                        {route.name}
+                      </Text>
+                    </Flex>
                     <Box
-                      color={
+                      h="36px"
+                      w="4px"
+                      bg={
                         activeRoute(route.path.toLowerCase())
-                          ? activeIcon
-                          : textColor
+                          ? brandColor
+                          : 'transparent'
                       }
-                      me="18px"
-                    >
-                      {route.icon}
-                    </Box>
+                      borderRadius="5px"
+                    />
+                  </HStack>
+                </Box>
+              ) : (
+                <Box>
+                  <HStack
+                    spacing={
+                      activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
+                    }
+                    py="5px"
+                    ps="10px"
+                  >
                     <Text
                       me="auto"
                       color={
                         activeRoute(route.path.toLowerCase())
                           ? activeColor
-                          : textColor
+                          : inactiveColor
                       }
                       fontWeight={
-                        activeRoute(route.path.toLowerCase())
-                          ? 'bold'
-                          : 'normal'
+                        activeRoute(route.path.toLowerCase()) ? 'bold' : 'normal'
                       }
                     >
                       {route.name}
                     </Text>
-                  </Flex>
-                  <Box
-                    h="36px"
-                    w="4px"
-                    bg={
-                      activeRoute(route.path.toLowerCase())
-                        ? brandColor
-                        : 'transparent'
-                    }
-                    borderRadius="5px"
-                  />
-                </HStack>
-              </Box>
-            ) : (
-              <Box>
-                <HStack
-                  spacing={
-                    activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
-                  }
-                  py="5px"
-                  ps="10px"
-                >
-                  <Text
-                    me="auto"
-                    color={
-                      activeRoute(route.path.toLowerCase())
-                        ? activeColor
-                        : inactiveColor
-                    }
-                    fontWeight={
-                      activeRoute(route.path.toLowerCase()) ? 'bold' : 'normal'
-                    }
-                  >
-                    {route.name}
-                  </Text>
-                  <Box h="36px" w="4px" bg="brand.400" borderRadius="5px" />
-                </HStack>
-              </Box>
-            )}
-          </Link>
+                    <Box h="36px" w="4px" bg="brand.400" borderRadius="5px" />
+                  </HStack>
+                </Box>
+              )}
+            </Link>
         );
       }
 
