@@ -441,7 +441,7 @@ export default function SignUp() {
                 {emailWrong ? (
                   <Box>
                     <MustBeSameError
-                      message={'Emails não conhecidem!'}
+                      message={'Emails não coincidem!'}
                     ></MustBeSameError>
                   </Box>
                 ) : null}
@@ -514,7 +514,7 @@ export default function SignUp() {
                 {passwordWrong ? (
                   <Box>
                     <MustBeSameError
-                      message={'Senhas não conhecidem!'}
+                      message={'Senhas não coincidem!'}
                     ></MustBeSameError>
                   </Box>
                 ) : null}
