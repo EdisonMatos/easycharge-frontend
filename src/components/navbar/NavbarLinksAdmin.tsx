@@ -158,8 +158,13 @@ export default function HeaderLinks(props: {
             Admin
           </Text>
         </Link>
-        <Link href="/auth/sign-in" className="flex flex-col items-center">
-          <Icon as={MdLogout} width="20px" height="20px" color="inherit" />
+        <Link href="/auth/sign-in"
+          onClick={() => {
+            signOut({
+              callbackUrl: "/auth/sign-in",
+              redirect: true
+            })
+          }}>
           <Text
             className="flex items-center hover:underline"
             fontSize="sm"

@@ -59,7 +59,7 @@ export default function Validate() {
         "Content-Type": "application/json"
       },  
     };
-    fetch(`http://192.168.1.236:8080/users/validate`, requestOptions)
+    fetch(`http://localhost:8080/users/validate`, requestOptions)
       .then(response => response.json())
       .then(data => {
         let message = "Link de confirmação inválido ou expirado!"

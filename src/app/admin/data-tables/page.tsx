@@ -8,10 +8,14 @@ import tableDataDevelopment from 'views/admin/dataTables/variables/tableDataDeve
 import tableDataCheck from 'views/admin/dataTables/variables/tableDataCheck';
 import tableDataColumns from 'views/admin/dataTables/variables/tableDataColumns';
 import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLayout from 'layouts/admin';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { jwtDecode } from "jwt-decode";
 
 export default function DataTables() {
+
   return (
     <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
@@ -22,7 +26,7 @@ export default function DataTables() {
         <DevelopmentTable tableData={tableDataDevelopment} />
         <CheckTable tableData={tableDataCheck} />
         <ColumnsTable tableData={tableDataColumns} />
-        <ComplexTable tableData={tableDataComplex} />
+        <ComplexTable />
       </SimpleGrid>
     </Box>
   );

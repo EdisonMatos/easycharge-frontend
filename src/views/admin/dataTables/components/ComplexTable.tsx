@@ -23,29 +23,57 @@ import {
 // Custom components
 import Card from 'components/card/Card';
 import Menu from 'components/menu/MainMenu';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import * as React from 'react';
+import { useEffect } from 'react';
 // Assets
 import { MdCancel, MdCheckCircle, MdOutlineError } from 'react-icons/md';
+import { jwtDecode } from "jwt-decode";
 
 type RowObj = {
-  name: string;
+  identification: string;
   status: string;
-  date: string;
-  progress: number;
+  createdAt: string;
 };
 
 const columnHelper = createColumnHelper<RowObj>();
 
 // const columns = columnsDataCheck;
-export default function ComplexTable(props: { tableData: any }) {
-  const { tableData } = props;
+export default function ComplexTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
+  const [data, setData] = React.useState(() => []);
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
-  let defaultData = tableData;
+  const { data: session, status } = useSession()
+  console.log(session)
+  if (session === null && status === 'unauthenticated') {
+    redirect("/auth/sign-in")
+  }
+
+  useEffect(() => {
+    if (session) {
+      //@ts-ignore
+      const token = session?.accessToken
+      const decoded = jwtDecode(token);
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json"
+        },
+      };
+      //@ts-ignore
+      fetch(`http://localhost:8080/receipts/findAllPerUserEmail/${decoded.email}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          setData(data)
+          console.log(data)
+        })
+    }
+  }, [session])
   const columns = [
-    columnHelper.accessor('name', {
-      id: 'name',
+    columnHelper.accessor('identification', {
+      id: 'identification',
       header: () => (
         <Text
           justifyContent="space-between"
@@ -53,7 +81,7 @@ export default function ComplexTable(props: { tableData: any }) {
           fontSize={{ sm: '10px', lg: '12px' }}
           color="gray.400"
         >
-          CASHBACK
+          NOME
         </Text>
       ),
       cell: (info: any) => (
@@ -83,20 +111,20 @@ export default function ComplexTable(props: { tableData: any }) {
             h="24px"
             me="5px"
             color={
-              info.getValue() === 'Approved'
+              info.getValue() === 'APPROVED'
                 ? 'green.500'
-                : info.getValue() === 'Disable'
+                : info.getValue() === 'DENIED'
                 ? 'red.500'
-                : info.getValue() === 'Error'
+                : info.getValue() === 'PENDING'
                 ? 'orange.500'
                 : null
             }
             as={
-              info.getValue() === 'Approved'
+              info.getValue() === 'APPROVED'
                 ? MdCheckCircle
-                : info.getValue() === 'Disable'
+                : info.getValue() === 'DENIED'
                 ? MdCancel
-                : info.getValue() === 'Error'
+                : info.getValue() === 'PENDING'
                 ? MdOutlineError
                 : null
             }
@@ -107,8 +135,8 @@ export default function ComplexTable(props: { tableData: any }) {
         </Flex>
       ),
     }),
-    columnHelper.accessor('date', {
-      id: 'date',
+    columnHelper.accessor('createdAt', {
+      id: 'createdAt',
       header: () => (
         <Text
           justifyContent="space-between"
@@ -121,12 +149,13 @@ export default function ComplexTable(props: { tableData: any }) {
       ),
       cell: (info) => (
         <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
+          {new Date(info.getValue()).toLocaleDateString("pt-BR")}
         </Text>
       ),
     }),
   ];
-  const [data, setData] = React.useState(() => [...defaultData]);
+
+  
   const table = useReactTable({
     data,
     columns,
@@ -138,6 +167,7 @@ export default function ComplexTable(props: { tableData: any }) {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
+
   return (
     <Card
       flexDirection="column"

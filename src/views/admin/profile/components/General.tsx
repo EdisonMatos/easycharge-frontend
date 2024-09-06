@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Input,
   FormControl,
@@ -10,6 +10,9 @@ import {
   Tr,
   Td,
 } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { jwtDecode } from "jwt-decode";
 
 function FilterableUserList() {
   const [points, setPoints] = useState('');
@@ -17,30 +20,57 @@ function FilterableUserList() {
   const [foundUser, setFoundUser] = useState(null);
   const [searchClicked, setSearchClicked] = useState(false);
 
-  // Lista de usuários com UUID fixos
-  const users = [
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0851', name: 'João', points: 120 },
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0852', name: 'Carlos', points: 85 },
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0853', name: 'Maria', points: 150 },
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0854', name: 'Ana', points: 70 },
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0855', name: 'Pedro', points: 95 },
-    {
-      id: 'd290f1ee-6c54-4b01-90e6-d701748f0856',
-      name: 'Juliana',
-      points: 110,
-    },
-    { id: 'd290f1ee-6c54-4b01-90e6-d701748f0857', name: 'Rafael', points: 130 },
-  ];
+
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email');
+  const token = searchParams.get('token');
+  const receiptId = searchParams.get('id');
+
+  useEffect(()=>{
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    };
+    if (email) {
+      setSearchClicked(true);
+      fetch(`http://localhost:8080/users/findByEmail/${email}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            setFoundUser(data);
+            setSearchInput(data.id)
+          } else {
+            setFoundUser(null);
+          }
+        })
+    }
+  }
+  ,[])
+
 
   // Função para buscar usuário
   const handleSearch = () => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    };
     setSearchClicked(true);
-    const user = users.find((user) => user.id === searchInput);
-    if (user) {
-      setFoundUser(user);
-    } else {
-      setFoundUser(null);
-    }
+
+
+    fetch(`http://localhost:8080/users/${searchInput}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          setFoundUser(data);
+        } else {
+          setFoundUser(null);
+        }
+      })
+
   };
 
   // Função para resetar o estado inicial
@@ -53,11 +83,29 @@ function FilterableUserList() {
 
   // Função para adicionar pontos com alerta de confirmação
   const handleAddPoints = () => {
+    const requestOptions = {
+      method: 'PATCH',
+      body: JSON.stringify({
+        token,
+        points
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    };
     const confirmation = window.confirm(
       `Tem certeza que deseja adicionar ${points} pontos para o usuário ${foundUser.name}?`,
     );
     if (confirmation) {
-      alert('Pontos adicionados com sucesso!');
+      
+      fetch(`http://localhost:8080/users/addPoints/${searchInput}/${receiptId}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data) {
+            console.log(data)
+            alert(`${points} pontos adicionados com sucesso!`);
+          }
+        })
     } else {
       alert('Operação cancelada.');
     }
@@ -65,7 +113,7 @@ function FilterableUserList() {
   };
 
   // Função para permitir apenas números positivos no campo de pontos
-  const handlePointsChange = (e) => {
+  const handlePointsChange = (e: any) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       // Regex para permitir apenas números positivos
@@ -127,7 +175,7 @@ function FilterableUserList() {
               </Tr>
               <Tr>
                 <Td>Saldo de Pontos:</Td>
-                <Td>{foundUser.points}</Td>
+                <Td>{foundUser.availablePoints}</Td>
               </Tr>
             </Tbody>
           </Table>

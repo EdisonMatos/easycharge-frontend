@@ -54,12 +54,40 @@ import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
 import Usa from 'img/dashboards/usa.png';
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-
+import { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
 export default function Default() {
-  // const { data: session, status } = useSession()
-  // if (session === null && status === 'unauthenticated' ){
-  //   redirect("/auth/sign-in")
-  // }
+  const [userData, setUserData] = useState({availablePoints:0, totalWithdraw:0, receipts:[]});
+  const { data: session, status } = useSession()
+  if (session === null && status === 'unauthenticated') {
+    redirect("/auth/sign-in")
+  }
+
+
+
+  useEffect(() => {
+    if (session) {
+      //@ts-ignore
+      const token = session?.accessToken
+      const decoded = jwtDecode(token);
+
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json"
+        },  
+      };
+      //@ts-ignore
+      fetch(`http://localhost:8080/users/findByEmail/${decoded.email}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          const {receipts, availablePoints, totalWithdraw } = data
+          setUserData({receipts, availablePoints, totalWithdraw})
+        })
+    }
+
+
+  }, [session])
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const negativeColor = useColorModeValue('red.600', 'white');
@@ -98,7 +126,7 @@ export default function Default() {
             />
           }
           name="Pontos"
-          value="5.000"
+          value={userData.availablePoints}
         />
         {/* <MiniStatistics
           growth="+23%"
@@ -116,6 +144,8 @@ export default function Default() {
               }
             />
           }
+          name="Saques efetivados"
+          value={`R$ ${userData.totalWithdraw}`}
           name="Disponível para saque"
           value="R$ 2.950,00"
         />
@@ -131,7 +161,7 @@ export default function Default() {
             />
           }
           name="Comprovantes enviados"
-          value="7"
+          value={userData.receipts.length}
         />
         {/* <MiniStatistics
           startContent={

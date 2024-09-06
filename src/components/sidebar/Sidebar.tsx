@@ -86,11 +86,13 @@ export function SidebarResponsive(props: SidebarResponsiveProps) {
 
       if (overlay) {
         overlay.classList.remove('chakra-modal__overlay');
+        //@ts-ignore
         overlay.style.position = 'static';
       }
 
       if (contentContainer) {
         contentContainer.classList.remove('chakra-modal__content-container');
+        //@ts-ignore
         contentContainer.style.position = 'static';
       }
     }, 300);

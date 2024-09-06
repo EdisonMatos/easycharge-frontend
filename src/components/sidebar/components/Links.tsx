@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { IRoute } from 'types/navigation';
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
+import { signOut } from 'next-auth/react';
 
 interface SidebarLinksProps {
   routes: IRoute[];
@@ -37,13 +38,19 @@ export function SidebarLinks(props: SidebarLinksProps) {
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes: IRoute[]) => {
     return routes.map((route, index: number) => {
+
       if (
         route.layout === '/admin' ||
         route.layout === '/auth' ||
         route.layout === '/rtl'
       ) {
         return (
-          <Link key={index} href={route.layout + route.path}>
+          <Link onClick={()=>{
+            if(route.name === "Sair") return signOut({
+              callbackUrl: "/auth/sign-in",
+              redirect: true
+            })
+          }} key={index} href={route.layout + route.path}>
             {route.icon ? (
               <Box>
                 <HStack
@@ -121,6 +128,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
           </Link>
         );
       }
+
     });
   };
   //  BRAND

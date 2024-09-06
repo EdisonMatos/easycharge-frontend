@@ -183,7 +183,7 @@ export default function ForgotPassword() {
                   h="50"
                   mb="24px"
                 >
-                  Cadastrar
+                  Recuperar
                 </Button>
               </FormControl>
               <Flex
