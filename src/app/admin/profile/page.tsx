@@ -1,28 +1,17 @@
 'use client';
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 // Chakra imports
-import { Box, Grid } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  Grid,
+  Input,
+  FormLabel,
+  Button,
+  Text,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import AdminLayout from 'layouts/admin';
 
 // Custom components
@@ -36,72 +25,88 @@ import Upload from 'views/admin/profile/components/Upload';
 // Assets
 import banner from 'img/auth/banner.png';
 import avatar from 'img/avatars/avatar4.png';
+import React, { useState } from 'react';
 
 export default function ProfileOverview() {
+  const [multiplier, setMultiplier] = useState<string>('');
+  const [buttonActive, setButtonActive] = useState<boolean>(false);
+  const toast = useToast();
+
+  const handleMultiplierChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = event.target.value;
+    // Permitir apenas números e vírgulas
+    if (/^[0-9]*[,]?[0-9]*$/.test(value)) {
+      setMultiplier(value);
+      setButtonActive(value.trim() !== '');
+    }
+  };
+
+  const handleUpdateMultiplier = () => {
+    const confirmed = window.confirm(
+      `Tem certeza que deseja atualizar o multiplicador para ${multiplier}?`,
+    );
+    if (confirmed) {
+      toast({
+        title: 'Multiplicador atualizado com sucesso.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: 'Operação cancelada.',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    // Resetar o estado
+    setMultiplier('');
+    setButtonActive(false);
+  };
+
   return (
     <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
+      <FormControl
+        id="user-form"
+        className="bg-white p-[25px] rounded-3xl lg:w-[50%] flex flex-col mb-[32px]"
+      >
+        <Text
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+          className="mb-[22px]"
+        >
+          Alterar multiplicador de pontos
+        </Text>
+        <p className="text-[16px] text-neutral-500 font-medium mb-[24px]">
+          Adicione o novo modificador no campo abaixo.
+        </p>
+        <p>
+          O multiplicador atual é:
+          <span className="ml-[10px] font-bold text-green-500">10,27</span>
+        </p>
+
+        <FormLabel className="mt-[20px]">Novo multiplicador:</FormLabel>
+        <Input
+          placeholder="Digite um número"
+          className="w-[80%]"
+          value={multiplier}
+          onChange={handleMultiplierChange}
+        />
+        <Button
+          mt="4"
+          className="w-[80%] rounded-md"
+          colorScheme="brand"
+          isDisabled={!buttonActive}
+          onClick={handleUpdateMultiplier}
+        >
+          Atualizar multiplicador
+        </Button>
+      </FormControl>
       <General />
-      {/* Main Fields */}
-      {/* <Grid
-        templateColumns={{
-          base: '1fr',
-          lg: '1.34fr 1fr 1.62fr',
-        }}
-        templateRows={{
-          base: 'repeat(3, 1fr)',
-          lg: '1fr',
-        }}
-        gap={{ base: '20px', xl: '20px' }}
-      >
-        <Banner
-          gridArea="1 / 1 / 2 / 2"
-          banner={banner}
-          avatar={avatar}
-          name="Adela Parkson"
-          job="Product Designer"
-          posts="17"
-          followers="9.7k"
-          following="274"
-        />
-        <Storage
-          gridArea={{ base: '2 / 1 / 3 / 2', lg: '1 / 2 / 2 / 3' }}
-          used={25.6}
-          total={50}
-        />
-        <Upload
-          gridArea={{
-            base: '3 / 1 / 4 / 2',
-            lg: '1 / 3 / 2 / 4',
-          }}
-          minH={{ base: 'auto', lg: '420px', '2xl': '365px' }}
-          pe="20px"
-          pb={{ base: '100px', lg: '20px' }}
-        />
-      </Grid>
-      <Grid
-        mb="20px"
-        templateColumns={{
-          base: '1fr',
-          lg: 'repeat(2, 1fr)',
-          '2xl': '1.34fr 1.62fr 1fr',
-        }}
-        templateRows={{
-          base: '1fr',
-          lg: 'repeat(2, 1fr)',
-          '2xl': '1fr',
-        }}
-        gap={{ base: '20px', xl: '20px' }}
-      >
-        <Notifications
-          used={25.6}
-          total={50}
-          gridArea={{
-            base: '3 / 1 / 4 / 2',
-            lg: '2 / 1 / 3 / 3',
-            '2xl': '1 / 3 / 2 / 4',
-          }}
-        />
-      </Grid> */}
     </Box>
   );
 }
