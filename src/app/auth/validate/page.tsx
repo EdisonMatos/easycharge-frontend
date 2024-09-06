@@ -61,15 +61,15 @@ export default function Validate() {
         'Content-Type': 'application/json',
       },
     };
-    fetch(`http://localhost:8080/users/validate`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        let message = 'Link de confirmação inválido ou expirado!';
-        let isValidated = false;
-        setIsLoading(false);
-        if (data.isValidated) {
-          message = 'Cadastro concluído com sucesso!';
-          isValidated = data.isValidated;
+    fetch(`https://api.pay4gains.com/users/validate`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        let message = "Link de confirmação inválido ou expirado!"
+        let isValidated = false
+        setIsLoading(false)
+        if(data.isValidated){
+          message = "Cadastro concluído com sucesso!"
+          isValidated = data.isValidated
         }
         setValidation({ isValidated, message });
 

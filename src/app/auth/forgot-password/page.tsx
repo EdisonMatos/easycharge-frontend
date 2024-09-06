@@ -65,10 +65,9 @@ export default function ForgotPassword() {
       },
     };
 
-    fetch(`http://192.168.1.236:8080/users/changePassword`, requestOptions)
+    fetch(`https://api.pay4gains.com/users/changePassword`, requestOptions)
       .then((response) => response ?? response.json())
       .then((data) => {
-        console.log(data);
         if (data.error) {
           let urlToPush = '/auth/forgot-password?error=CredentialsSignup';
           route.push(urlToPush);

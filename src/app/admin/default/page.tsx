@@ -59,6 +59,7 @@ import { jwtDecode } from "jwt-decode";
 export default function Default() {
   const [userData, setUserData] = useState({availablePoints:0, totalWithdraw:0, receipts:[]});
   const { data: session, status } = useSession()
+  const [currentMultiplier, setCurrentMultiplier ] = useState<number>(0);
   if (session === null && status === 'unauthenticated') {
     redirect("/auth/sign-in")
   }
@@ -78,11 +79,17 @@ export default function Default() {
         },  
       };
       //@ts-ignore
-      fetch(`http://localhost:8080/users/findByEmail/${decoded.email}`, requestOptions)
+      fetch(`https://api.pay4gains.com/users/findByEmail/${decoded.email}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           const {receipts, availablePoints, totalWithdraw } = data
           setUserData({receipts, availablePoints, totalWithdraw})
+        })
+
+        fetch(`https://api.pay4gains.com/multiplier`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          setCurrentMultiplier(data.value)
         })
     }
 
@@ -144,10 +151,8 @@ export default function Default() {
               }
             />
           }
-          name="Saques efetivados"
-          value={`R$ ${userData.totalWithdraw}`}
+          value={`R$ ${userData.availablePoints * currentMultiplier}`}
           name="Disponível para saque"
-          value="R$ 2.950,00"
         />
         <MiniStatistics
           startContent={

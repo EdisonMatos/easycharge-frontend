@@ -9,7 +9,9 @@ const nextConfig = {
       'images.unsplash.com',
       'i.ibb.co',
       'scontent.fotp8-1.fna.fbcdn.net',
-      'localhost'
+      'localhost',
+      'api.pay4gains.com'
+      
     ],
     // Make ENV
     // unoptimized: true,

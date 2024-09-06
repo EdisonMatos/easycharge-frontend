@@ -46,7 +46,6 @@ export default function ComplexTable() {
   const [data, setData] = React.useState(() => []);
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
   const { data: session, status } = useSession()
-  console.log(session)
   if (session === null && status === 'unauthenticated') {
     redirect("/auth/sign-in")
   }
@@ -63,11 +62,10 @@ export default function ComplexTable() {
         },
       };
       //@ts-ignore
-      fetch(`http://localhost:8080/receipts/findAllPerUserEmail/${decoded.email}`, requestOptions)
+      fetch(`https://api.pay4gains.com/receipts/findAllPerUserEmail/${decoded.email}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           setData(data)
-          console.log(data)
         })
     }
   }, [session])

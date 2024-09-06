@@ -39,20 +39,22 @@ export default function NftMarketplace() {
       //@ts-ignore
       const token = session?.accessToken
       const decoded = jwtDecode(token);
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      //@ts-ignore
+      formData.append('customerEmail', decoded.email)
+      formData.append('identification', identification)
+
 
       const requestOptions = {
         method: 'POST',
-        body: JSON.stringify({
-          identification,
-          //@ts-ignore
-          customerEmail: decoded.email,
-          receiptImage: "something"
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        },
+        body: formData,
+        // headers: {
+        //   "Content-Type": "application/json"
+        // },
       };
-      fetch(`http://localhost:8080/receipts`, requestOptions)
+      //@ts-ignore
+      fetch(`https://api.pay4gains.com/receipts`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

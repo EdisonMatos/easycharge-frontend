@@ -34,9 +34,9 @@ function FilterableUserList() {
     };
     if (email) {
       setSearchClicked(true);
-      fetch(`http://localhost:8080/users/findByEmail/${email}`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
+      fetch(`https://api.pay4gains.com/users/findByEmail/${email}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
           if (data) {
             setFoundUser(data);
             setSearchInput(data.id);
@@ -57,9 +57,10 @@ function FilterableUserList() {
     };
     setSearchClicked(true);
 
-    fetch(`http://localhost:8080/users/${searchInput}`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
+
+    fetch(`https://api.pay4gains.com/users/${searchInput}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
         if (data) {
           setFoundUser(data);
         } else {
@@ -92,14 +93,11 @@ function FilterableUserList() {
       `Tem certeza que deseja adicionar ${points} pontos para o usuário ${foundUser.name}?`,
     );
     if (confirmation) {
-      fetch(
-        `http://localhost:8080/users/addPoints/${searchInput}/${receiptId}`,
-        requestOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
+      
+      fetch(`https://api.pay4gains.com/users/addPoints/${searchInput}/${receiptId}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
           if (data) {
-            console.log(data);
             alert(`${points} pontos adicionados com sucesso!`);
           }
         });

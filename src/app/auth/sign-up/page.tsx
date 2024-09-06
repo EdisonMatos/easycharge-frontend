@@ -131,7 +131,7 @@ export default function SignUp() {
           },
         };
         fetch(
-          `http://localhost:8080/users/usernameIsAvailable/${event.target.value}`,
+          `https://api.pay4gains.com/users/usernameIsAvailable/${event.target.value}`,
           requestOptions,
         )
           .then((response) => response.json())
@@ -179,7 +179,7 @@ export default function SignUp() {
       },
     };
 
-    fetch(`http://localhost:8080/users`, requestOptions)
+    fetch(`https://api.pay4gains.com/users`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
