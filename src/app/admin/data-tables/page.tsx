@@ -17,7 +17,7 @@ import { jwtDecode } from "jwt-decode";
 export default function DataTables() {
 
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <SimpleGrid
         mb="20px"
         spacing={{ base: '20px', xl: '20px' }}

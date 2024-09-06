@@ -46,8 +46,8 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 interface State {
-  password: string
-  confirmPassword: string
+  password: string;
+  confirmPassword: string;
 }
 export default function RecoveryPassword() {
   // Chakra color mode
@@ -57,76 +57,90 @@ export default function RecoveryPassword() {
 
   const [show, setShow] = React.useState(false);
   const [showConfirm, setShowConfirm] = React.useState(false);
-  const [isChanged, setIsChanged] = React.useState(false)
-  const [isChangedMessage, setIsChangedMessage] = React.useState("Senha alterada com sucesso!")
+  const [isChanged, setIsChanged] = React.useState(false);
+  const [isChangedMessage, setIsChangedMessage] = React.useState(
+    'Senha alterada com sucesso!',
+  );
   const [passwordWrong, setPasswordWrong] = React.useState(true);
   const [values, setValues] = React.useState<State>({
     password: '',
     confirmPassword: '',
-  })
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
-  const email = searchParams.get('email')
-  const error = searchParams.get('error')
-  const route = useRouter()
+  });
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const email = searchParams.get('email');
+  const error = searchParams.get('error');
+  const route = useRouter();
 
   const handleClickShow = () => setShow(!show);
   const handleClickShowConfirm = () => setShowConfirm(!showConfirm);
 
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
-    if (prop === ("password")) {
-      event.target.value !== values.confirmPassword ? setPasswordWrong(true) : setPasswordWrong(false)
-    }
-    if (prop === ("confirmPassword")) {
-      event.target.value !== values.password ? setPasswordWrong(true) : setPasswordWrong(false)
-    }
-  }
+  const handleChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+      if (prop === 'password') {
+        event.target.value !== values.confirmPassword
+          ? setPasswordWrong(true)
+          : setPasswordWrong(false);
+      }
+      if (prop === 'confirmPassword') {
+        event.target.value !== values.password
+          ? setPasswordWrong(true)
+          : setPasswordWrong(false);
+      }
+    };
 
   const handleRecovery = async (event: any) => {
-    const { password } = values
+    const { password } = values;
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({
         email,
         password,
-        token
+        token,
       }),
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
     };
 
     fetch(`http://192.168.1.236:8080/users/recoveryPassword`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
         if (data.error) {
-          if(data.error === "Unauthorized"){
-            setIsChanged(true)
-            setIsChangedMessage("Token inválido ou expirado.")
-            return
+          if (data.error === 'Unauthorized') {
+            setIsChanged(true);
+            setIsChangedMessage('Token inválido ou expirado.');
+            return;
           }
 
-          if(data.error === "Bad Request" &&  data.message.some((e: string) => e === "password is not strong enough" ) ){
-            route.push("/auth/recovery-password?error=StrongPassword");
-            return
+          if (
+            data.error === 'Bad Request' &&
+            data.message.some(
+              (e: string) => e === 'password is not strong enough',
+            )
+          ) {
+            route.push('/auth/recovery-password?error=StrongPassword');
+            return;
           }
-          let urlToPush = "/auth/recovery-password?error=CredentialsSignup"
-          data.error === "Conflict" ? urlToPush = "/auth/recovery-password?error=InvalidPassword" : null
+          let urlToPush = '/auth/recovery-password?error=CredentialsSignup';
+          data.error === 'Conflict'
+            ? (urlToPush = '/auth/recovery-password?error=InvalidPassword')
+            : null;
           route.push(urlToPush);
-          return
+          return;
         }
-        setIsChanged(true)
-        setTimeout(()=>{
-          route.push("/auth/sign-in")
-        }, 4000)
-      })
-    event.preventDefault()
-  }
+        setIsChanged(true);
+        setTimeout(() => {
+          route.push('/auth/sign-in');
+        }, 4000);
+      });
+    event.preventDefault();
+  };
   // useEffect(() => {
 
-  //   const requestOptions = { 
+  //   const requestOptions = {
   //     method: 'PATCH',
   //     body: JSON.stringify({
   //       token,
@@ -134,7 +148,7 @@ export default function RecoveryPassword() {
   //     }),
   //     headers: {
   //       "Content-Type": "application/json"
-  //     },  
+  //     },
   //   };
   //   fetch(`http://192.168.1.236:8080/users/validate`, requestOptions)
   //     .then(response => response.json())
@@ -160,10 +174,8 @@ export default function RecoveryPassword() {
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: "90%",
-          md: "50%"
+          sm: '100%',
         }}
-
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
         h={{
@@ -179,15 +191,15 @@ export default function RecoveryPassword() {
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
       >
-
-        {isChanged ?
+        {isChanged ? (
           <>
             <Box me="auto">
               <Heading color={textColor} fontSize="36px" mb="10px">
                 {isChangedMessage}
               </Heading>
             </Box>
-          </> :
+          </>
+        ) : (
           <>
             <Box me="auto">
               <Heading color={textColor} fontSize="36px" mb="10px">
@@ -214,69 +226,83 @@ export default function RecoveryPassword() {
               me="auto"
               mb={{ base: '20px', md: 'auto' }}
             >
-              <Box><RecoveryPasswordError error={error}></RecoveryPasswordError></Box>
+              <Box>
+                <RecoveryPasswordError error={error}></RecoveryPasswordError>
+              </Box>
               <FormControl>
-              <FormLabel
-                ms="4px"
-                fontSize="sm"
-                fontWeight="500"
-                color={textColor}
-                display="flex"
-              >
-                Senha<Text color={brandStars}>*</Text>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  isRequired={true}
+                <FormLabel
+                  ms="4px"
                   fontSize="sm"
-                  placeholder="Min. 8 caracteres"
-                  mb="24px"
-                  size="lg"
-                  minLength={8}
-                  onChange={handleChange('password')}
-                  type={show ? 'text' : 'password'}
-                  variant="auth"
-                />
-                <InputRightElement display="flex" alignItems="center" mt="4px">
-                  <Icon
-                    color={textColorSecondary}
-                    _hover={{ cursor: 'pointer' }}
-                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                    onClick={handleClickShow}
+                  fontWeight="500"
+                  color={textColor}
+                  display="flex"
+                >
+                  Senha<Text color={brandStars}>*</Text>
+                </FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    isRequired={true}
+                    fontSize="sm"
+                    placeholder="Min. 8 caracteres"
+                    mb="24px"
+                    size="lg"
+                    minLength={8}
+                    onChange={handleChange('password')}
+                    type={show ? 'text' : 'password'}
+                    variant="auth"
                   />
-                </InputRightElement>
-              </InputGroup>
-              <FormLabel
-                ms="4px"
-                fontSize="sm"
-                fontWeight="500"
-                color={textColor}
-                display="flex"
-              >
-                Confirmar senha<Text color={brandStars}>*</Text>
-              </FormLabel>
-              <InputGroup size="md">
-                <Input
-                  isRequired={true}
+                  <InputRightElement
+                    display="flex"
+                    alignItems="center"
+                    mt="4px"
+                  >
+                    <Icon
+                      color={textColorSecondary}
+                      _hover={{ cursor: 'pointer' }}
+                      as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                      onClick={handleClickShow}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+                <FormLabel
+                  ms="4px"
                   fontSize="sm"
-                  placeholder="Min. 8 caracteres, letras maiúsculas, minúsculas e símbolos(@,#)"
-                  mb="24px"
-                  size="lg"
-                  onChange={handleChange("confirmPassword")}
-                  type={showConfirm ? 'text' : 'password'}
-                  variant="auth"
-                />
-                <InputRightElement display="flex" alignItems="center" mt="4px">
-                  <Icon
-                    color={textColorSecondary}
-                    _hover={{ cursor: 'pointer' }}
-                    as={showConfirm ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                    onClick={handleClickShowConfirm}
+                  fontWeight="500"
+                  color={textColor}
+                  display="flex"
+                >
+                  Confirmar senha<Text color={brandStars}>*</Text>
+                </FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    isRequired={true}
+                    fontSize="sm"
+                    placeholder="Min. 8 caracteres, letras maiúsculas, minúsculas e símbolos(@,#)"
+                    mb="24px"
+                    size="lg"
+                    onChange={handleChange('confirmPassword')}
+                    type={showConfirm ? 'text' : 'password'}
+                    variant="auth"
                   />
-                </InputRightElement>
-              </InputGroup>
-              {passwordWrong ? <Box><PasswordError></PasswordError></Box> : null}
-              <Button
+                  <InputRightElement
+                    display="flex"
+                    alignItems="center"
+                    mt="4px"
+                  >
+                    <Icon
+                      color={textColorSecondary}
+                      _hover={{ cursor: 'pointer' }}
+                      as={showConfirm ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                      onClick={handleClickShowConfirm}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+                {passwordWrong ? (
+                  <Box>
+                    <PasswordError></PasswordError>
+                  </Box>
+                ) : null}
+                <Button
                   fontSize="sm"
                   variant="brand"
                   fontWeight="500"
@@ -290,12 +316,12 @@ export default function RecoveryPassword() {
                 </Button>
               </FormControl>
             </Flex>
-          </>}
+          </>
+        )}
       </Flex>
     </DefaultAuthLayout>
   );
 }
-
 
 const errors = {
   Signin: 'Try signing with a different account.',
@@ -304,9 +330,8 @@ const errors = {
   OAuthCreateAccount: 'Try signing with a different account.',
   EmailCreateAccount: 'Try signing with a different account.',
   Callback: 'Try signing with a different account.',
-  InvalidPassword:
-    'Senha precisa ser diferente da anterior.',
-    StrongPassword:
+  InvalidPassword: 'Senha precisa ser diferente da anterior.',
+  StrongPassword:
     'Senha não é forte o suficiente, utilize símbolos, letras maiúsculas e números',
   InvalidToken: 'Token inválido ou expirado, tente novamente.',
   CredentialsSignin:
@@ -322,7 +347,8 @@ const RecoveryPasswordError = ({ error }) => {
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
       {errorMessage}
-    </Text>)
+    </Text>
+  );
 };
 
 //@ts-ignore
@@ -331,6 +357,7 @@ const PasswordError = () => {
   const textColorError = useColorModeValue('red.700', 'white');
   return (
     <Text color={textColorError} fontWeight="300" fontSize="14px">
-      Senhas não conhecidem!
-    </Text>)
+      Senhas não coincidem!
+    </Text>
+  );
 };

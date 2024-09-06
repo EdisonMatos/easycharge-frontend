@@ -113,18 +113,12 @@ export default function SignIn() {
         w="100%"
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
-        h={{
-          sm: 'auto',
-          md: 'auto',
-          lg: '70vh',
-          xl: '70vh',
-        }}
         alignItems="start"
         justifyContent="center"
         mb={{ base: '30px', md: '60px' }}
         px={{ base: '25px', md: '0px' }}
-        mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
+        className="mt-[100px]"
       >
         <div
           className="flex items-center justify-center w-full bg-gray-100 mb-[60px] rounded-lg bg-center"

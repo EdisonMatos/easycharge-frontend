@@ -39,7 +39,7 @@ import avatar from 'img/avatars/avatar4.png';
 
 export default function ProfileOverview() {
   return (
-    <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+    <Box pt={{ base: '160px', md: '100px', xl: '0px' }}>
       <General />
       {/* Main Fields */}
       {/* <Grid

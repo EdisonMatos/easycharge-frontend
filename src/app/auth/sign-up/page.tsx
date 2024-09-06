@@ -203,8 +203,7 @@ export default function SignUp() {
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w={{
-          sm: '90%',
-          md: '50%',
+          base: '100%',
         }}
         mx={{ base: 'auto', lg: '0px' }}
         me="auto"
@@ -220,6 +219,7 @@ export default function SignUp() {
         px={{ base: '25px', md: '0px' }}
         mt={{ base: '40px', md: '14vh' }}
         flexDirection="column"
+        className=""
       >
         {isRegistered ? (
           <>
@@ -444,7 +444,7 @@ export default function SignUp() {
                 {emailWrong ? (
                   <Box>
                     <MustBeSameError
-                      message={'Emails não conhecidem!'}
+                      message={'Emails não coincidem!'}
                     ></MustBeSameError>
                   </Box>
                 ) : null}
@@ -517,7 +517,7 @@ export default function SignUp() {
                 {passwordWrong ? (
                   <Box>
                     <MustBeSameError
-                      message={'Senhas não conhecidem!'}
+                      message={'Senhas não coincidem!'}
                     ></MustBeSameError>
                   </Box>
                 ) : null}
