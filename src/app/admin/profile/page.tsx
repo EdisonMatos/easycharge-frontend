@@ -39,16 +39,19 @@ export default function ProfileOverview() {
   if (session === null && status === 'unauthenticated') {
     redirect("/")
   }
-  //@ts-ignore
-  const token = session?.accessToken
-  const decoded = jwtDecode(token);
-  //@ts-ignore
-  if(decoded.role !== "ADMIN"){
-    redirect("/")    
-  }
 
-  
+
+
   useEffect(() => {
+    if (session) {
+      //@ts-ignore
+      const token = session?.accessToken
+      const decoded = jwtDecode(token);
+      //@ts-ignore
+      if (decoded.role !== "ADMIN") {
+        redirect("/")
+      }
+    }
     const requestOptions = {
       method: 'GET',
       headers: {
